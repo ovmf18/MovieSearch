@@ -1,0 +1,118 @@
+.home-container {
+  padding: 4rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  .home-section {
+    margin-bottom: 4rem;
+
+    .section-header {
+      margin-bottom: 1.5rem;
+      
+      h2 {
+        font-size: 2rem;
+        margin-bottom: 0.3rem;
+        color: var(--text-main);
+        border-left: 4px solid var(--primary-color);
+        padding-left: 15px;
+      }
+
+      p {
+        color: var(--text-muted);
+        font-size: 1rem;
+        margin-left: 19px;
+      }
+    }
+
+    .list-wrapper {
+      position: relative;
+      width: 100%;
+      margin: 0 -10px; // Permite que a lista respire
+      padding: 0 10px;
+
+      .scroll-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: rgba(0, 223, 130, 0.2);
+        backdrop-filter: blur(8px);
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        opacity: 0;
+        transition: var(--transition);
+        border: 1px solid rgba(0, 223, 130, 0.3);
+
+        &.left { left: -20px; }
+        &.right { right: -20px; }
+
+        &:hover {
+          background: var(--primary-color);
+          color: var(--bg-color);
+          box-shadow: 0 0 20px rgba(0, 223, 130, 0.4);
+        }
+      }
+
+      &:hover {
+        .scroll-button {
+          opacity: 1;
+          &.left { left: 10px; }
+          &.right { right: 10px; }
+        }
+      }
+
+      .horizontal-list {
+        display: flex;
+        overflow-x: auto;
+        padding: 1rem 30px 2rem; // Espaço para não cortar nomes
+        gap: 20px;
+        scroll-behavior: smooth;
+        scroll-padding: 0 30px; // Alinha com o padding lateral
+
+        /* Custom scrollbar for the horizontal list */
+        &::-webkit-scrollbar {
+          height: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 10px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: #333;
+          border-radius: 10px;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+          background: var(--primary-color);
+        }
+        
+        // Para esconder o scrollbar no Firefox
+        scrollbar-width: thin;
+        scrollbar-color: #333 transparent;
+
+        /* Suporte para scroll magnético opcional */
+        scroll-snap-type: x mandatory;
+        & > div {
+          scroll-snap-align: start;
+        }
+      }
+    }
+  }
+
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+  }
+
+}

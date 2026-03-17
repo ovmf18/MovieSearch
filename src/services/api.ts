@@ -15,6 +15,20 @@ export const movieService = {
     return response.data.results;
   },
   
+  // Pega os próximos lançamentos
+  getUpcoming: async () => {
+    const response = await api.get('/movie/upcoming', {
+      params: { region: 'BR' } // Foca em lançamentos no Brasil
+    });
+    return response.data.results;
+  },
+
+  // Pega os filmes mais bem avaliados da história
+  getTopRated: async () => {
+    const response = await api.get('/movie/top_rated');
+    return response.data.results;
+  },
+
   // Realiza a busca de filmes por texto
   searchMovies: async (query: string) => {
     const response = await api.get('/search/movie', {
