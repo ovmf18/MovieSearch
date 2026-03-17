@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Clapperboard } from 'lucide-react';
 import './Navbar.scss';
 
@@ -5,10 +6,10 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <div className="logo">
+        <Link to="/" className="logo">
           <Clapperboard color="#00df82" size={32} />
           <h1>Movie<span>Search</span></h1>
-        </div>
+        </Link>
 
         <ul className="nav-links">
           <li><a href="#">Em Alta</a></li>

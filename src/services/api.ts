@@ -29,20 +29,26 @@ export const movieService = {
     return response.data.results;
   },
 
+  // Busca detalhes completos de um filme específico
+  getMovieDetails: async (id: string | number) => {
+    const response = await api.get(`/movie/${id}`, {
+      params: { append_to_response: 'videos,credits,release_dates' }
+    });
+    return response.data;
+  },
+
+  // Busca as datas de lançamento separadamente se necessário (opcional agora)
+  getReleaseDates: async (id: string | number) => {
+    const response = await api.get(`/movie/${id}/release_dates`);
+    return response.data.results;
+  },
+
   // Realiza a busca de filmes por texto
   searchMovies: async (query: string) => {
     const response = await api.get('/search/movie', {
       params: { query },
     });
     return response.data.results;
-  },
-  
-  // Pega detalhes de um filme específico (incluindo datas de lançamento no Brasil)
-  getMovieDetails: async (id: number) => {
-    const response = await api.get(`/movie/${id}`, {
-      params: { append_to_response: 'release_dates,credits' },
-    });
-    return response.data;
   },
 
 };
