@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Clock, Calendar, Star, Play } from 'lucide-react';
+import { ArrowLeft, Clock, Calendar, Star, Play, ImageOff } from 'lucide-react';
 import { movieService } from '../services/api';
 import './MovieDetails.scss';
 
@@ -55,20 +55,22 @@ const MovieDetails = () => {
   // Encontrar a data de lançamento e classificação no Brasil
   const brRelease = movie.release_dates.results.find(r => r.iso_3166_1 === 'BR');
   const certification = brRelease?.release_dates.find(rd => rd.certification !== '')?.certification || 'L';
-  const brDate = brRelease 
+  const brDate = brRelease
     ? new Date(brRelease.release_dates[0].release_date).toLocaleDateString('pt-BR')
     : new Date(movie.release_date).toLocaleDateString('pt-BR');
 
-  // Identificar Diretor e Roteirista
   const directors = movie.credits.crew.filter(person => person.job === 'Director');
   const writers = movie.credits.crew.filter(person => person.job === 'Screenplay' || person.job === 'Writer');
 
-  const backgroundUrl = `https://image.tmdb.org/t/p/original${movie.backdrop_path}`;
-  const posterUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+  const backgroundUrl = movie.backdrop_path ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}` : null;
+  const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : null;
 
   return (
     <div className="movie-details-page">
-      <div className="backdrop-container" style={{ backgroundImage: `url(${backgroundUrl})` }}>
+      <div
+        className="backdrop-container"
+        style={backgroundUrl ? { backgroundImage: `url(${backgroundUrl})` } : { backgroundColor: '#0f1014' }}
+      >
         <div className="backdrop-overlay"></div>
       </div>
 
@@ -79,7 +81,14 @@ const MovieDetails = () => {
 
         <div className="main-info">
           <div className="poster-side">
-            <img src={posterUrl} alt={movie.title} className="detail-poster" />
+            {posterUrl ? (
+              <img src={posterUrl} alt={movie.title} className="detail-poster" />
+            ) : (
+              <div className="detail-poster missing">
+                <ImageOff size={80} />
+                <span>Pôster indisponível</span>
+              </div>
+            )}
           </div>
 
           <div className="content-side">
@@ -112,7 +121,7 @@ const MovieDetails = () => {
                 {movie.vote_average > 0 ? movie.vote_average.toFixed(1) : 'N/A'}
               </div>
               <span className="vote-label">Avaliação dos Usuários</span>
-              
+
               <button className="trailer-btn">
                 <Play size={20} fill="currentColor" /> Assista ao Trailer
               </button>

@@ -2,12 +2,12 @@
 
 :root {
   /* Paleta Verde Premium */
-  --primary-color: #00df82;       /* Verde vibrante principal */
-  --primary-hover: #00bc6e;       /* Verde um pouco mais escuro para hover */
+  --primary-color: #00df82;
+  --primary-hover: #00bc6e;
   
   /* Tons de Fundo e Superfície */
-  --bg-color: #0b0c10;           /* Fundo principal escuro */
-  --surface-color: #1f2833;      /* Cor de cards e elementos flutuantes */
+  --bg-color: #0b0c10;
+  --surface-color: #1f2833;
   
   /* Cores de Texto */
   --text-main: #ffffff;
@@ -57,7 +57,6 @@ button {
   transition: var(--transition);
 }
 
-/* Scrollbar personalizada para combinar com o tema verde */
 ::-webkit-scrollbar {
   width: 8px;
 }

@@ -74,12 +74,11 @@
       .horizontal-list {
         display: flex;
         overflow-x: auto;
-        padding: 1rem 30px 2rem; // Espaço para não cortar nomes
+        padding: 1rem 30px 2rem;
         gap: 20px;
         scroll-behavior: smooth;
-        scroll-padding: 0 30px; // Alinha com o padding lateral
+        scroll-padding: 0 30px;
 
-        /* Custom scrollbar for the horizontal list */
         &::-webkit-scrollbar {
           height: 6px;
         }
@@ -98,11 +97,9 @@
           background: var(--primary-color);
         }
         
-        // Para esconder o scrollbar no Firefox
         scrollbar-width: thin;
         scrollbar-color: #333 transparent;
 
-        /* Suporte para scroll magnético opcional */
         scroll-snap-type: x mandatory;
         & > div {
           scroll-snap-align: start;

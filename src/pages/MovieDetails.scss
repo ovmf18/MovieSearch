@@ -71,9 +71,26 @@
       .poster-side {
         .detail-poster {
           width: 100%;
-          border-radius: var(--border-radius);
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+          border-radius: 12px;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
           border: 1px solid rgba(255, 255, 255, 0.1);
+
+          &.missing {
+            aspect-ratio: 2/3;
+            background: #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            color: #333;
+            font-weight: 600;
+            font-size: 1.2rem;
+
+            svg {
+              opacity: 0.3;
+            }
+          }
         }
       }
 
@@ -107,16 +124,15 @@
             font-weight: 800;
             font-size: 0.85rem;
             color: #fff;
-            flex-shrink: 0; // Impede que o quadrado esmague em telas menores
+            flex-shrink: 0;
             border: 1px solid rgba(255, 255, 255, 0.1);
 
-            // Cores padrão de classificação brasileira
-            &.cert-l { background-color: #008000; } // Livre - Verde
-            &.cert-10 { background-color: #0000ff; } // 10 anos - Azul
-            &.cert-12 { background-color: #ffff00; color: #000; } // 12 anos - Amarelo
-            &.cert-14 { background-color: #ffa500; } // 14 anos - Laranja
-            &.cert-16 { background-color: #ff0000; } // 16 anos - Vermelho
-            &.cert-18 { background-color: #000000; border: 1px solid #ff0000; } // 18 anos - Preto
+            &.cert-l { background-color: #008000; }
+            &.cert-10 { background-color: #0000ff; }
+            &.cert-12 { background-color: #ffff00; color: #000; }
+            &.cert-14 { background-color: #ffa500; }
+            &.cert-16 { background-color: #ff0000; }
+            &.cert-18 { background-color: #000000; border: 1px solid #ff0000; }
           }
 
           .info-item {
@@ -293,7 +309,7 @@
     grid-template-columns: 1fr;
     
     .poster-side {
-      display: none; // No mobile escondemos o pôster lateral pois já temos o backdrop
+      display: none;
     }
   }
 }

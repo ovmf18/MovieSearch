@@ -37,7 +37,7 @@ export const movieService = {
     return response.data;
   },
 
-  // Busca as datas de lançamento separadamente se necessário (opcional agora)
+  // Busca as datas de lançamento separadamente se necessário
   getReleaseDates: async (id: string | number) => {
     const response = await api.get(`/movie/${id}/release_dates`);
     return response.data.results;
