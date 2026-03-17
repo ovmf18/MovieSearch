@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@500;700&display=swap');
+
+:root {
+  /* Paleta Verde Premium */
+  --primary-color: #00df82;       /* Verde vibrante principal */
+  --primary-hover: #00bc6e;       /* Verde um pouco mais escuro para hover */
+  
+  /* Tons de Fundo e Superfície */
+  --bg-color: #0b0c10;           /* Fundo principal escuro */
+  --surface-color: #1f2833;      /* Cor de cards e elementos flutuantes */
+  
+  /* Cores de Texto */
+  --text-main: #ffffff;
+  --text-muted: #c5c6c7;
+  
+  /* Efeitos */
+  --glass-bg: rgba(31, 40, 51, 0.7);
+  --border-radius: 12px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: var(--transition);
+}
+
+/* Scrollbar personalizada para combinar com o tema verde */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
