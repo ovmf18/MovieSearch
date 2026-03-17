@@ -2,12 +2,14 @@ import { useEffect, useState, useRef } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { movieService } from '../services/api'
 import MovieCard from '../components/MovieCard'
+import Hero from '../components/Hero'
 import './Home.scss'
 
 interface Movie {
   id: number;
   title: string;
   poster_path: string;
+  backdrop_path: string;
   release_date: string;
   vote_average: number;
 }
@@ -101,11 +103,14 @@ const Home = () => {
       {loading ? (
         <div className="loading">Carregando o melhor do cinema...</div>
       ) : (
-        <main className="home-main">
-          {renderSection("🎬 Em Alta", "Os filmes de maior sucesso nesta semana", trendingMovies, trendingRef as React.RefObject<HTMLDivElement>)}
-          {renderSection("📅 Lançamentos", "Próximas estreias no Brasil", upcomingMovies, upcomingRef as React.RefObject<HTMLDivElement>)}
-          {renderSection("🏆 Melhores da História", "Os filmes mais bem avaliados pelos usuários", topRatedMovies, topRatedRef as React.RefObject<HTMLDivElement>)}
-        </main>
+        <>
+          <Hero backdropPath={trendingMovies[0]?.backdrop_path} />
+          <main className="home-main">
+            {renderSection("🎬 Em Alta", "Os filmes de maior sucesso nesta semana", trendingMovies, trendingRef as React.RefObject<HTMLDivElement>)}
+            {renderSection("📅 Lançamentos", "Próximas estreias no Brasil", upcomingMovies, upcomingRef as React.RefObject<HTMLDivElement>)}
+            {renderSection("🏆 Melhores da História", "Os filmes mais bem avaliados pelos usuários", topRatedMovies, topRatedRef as React.RefObject<HTMLDivElement>)}
+          </main>
+        </>
       )}
     </div>
   )

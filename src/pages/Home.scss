@@ -1,7 +1,12 @@
 .home-container {
-  padding: 4rem 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
+  padding: 0 0 4rem; 
+  width: 100%;
+
+  .home-main {
+    padding: 4rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
 
   .home-section {
     margin-bottom: 4rem;
