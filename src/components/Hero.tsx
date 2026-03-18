@@ -58,7 +58,7 @@ const Hero = ({ backdropPath }: HeroProps) => {
             <form className="search-box" onSubmit={handleSearch}>
               <input
                 type="text"
-                placeholder="Buscar por um Filme, Série ou Pessoa..."
+                placeholder="Buscar por um Filme..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onBlur={() => setTimeout(() => setShowDropdown(false), 200)}

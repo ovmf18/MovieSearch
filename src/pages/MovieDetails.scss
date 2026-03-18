@@ -92,6 +92,106 @@
             }
           }
         }
+
+        .watch-providers-section {
+          margin-top: 2rem;
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          border-radius: 12px;
+          padding: 1.5rem;
+
+          h3 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+          }
+
+          .providers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+
+            .provider-group {
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+
+              span {
+                font-size: 0.9rem;
+                color: var(--text-muted);
+                font-weight: 600;
+                text-align: center;
+              }
+
+              .provider-list {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+
+                .provider-logo {
+                  width: 45px;
+                  height: 45px;
+                  border-radius: 10px;
+                  object-fit: cover;
+                  border: 1px solid rgba(255, 255, 255, 0.1);
+                  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+                  transition: var(--transition);
+
+                  &:hover {
+                    transform: scale(1.1);
+                    border-color: var(--primary-color);
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .side-info-section {
+          margin-top: 1.5rem;
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          border-radius: 12px;
+          padding: 1.5rem;
+
+          h3 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+          }
+
+          .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
+            .info-item-block {
+              display: flex;
+              flex-direction: column;
+              gap: 4px;
+
+              .info-label {
+                font-size: 0.9rem;
+                font-weight: 600;
+                color: var(--text-muted);
+                text-transform: uppercase;
+                letter-spacing: 1px;
+              }
+
+              .info-value {
+                font-size: 1rem;
+                color: #fff;
+              }
+            }
+          }
+        }
       }
 
       .content-side {
@@ -104,6 +204,15 @@
             font-weight: 400;
             opacity: 0.6;
           }
+        }
+
+        .tagline {
+          font-size: 1.2rem;
+          font-style: italic;
+          color: var(--primary-color);
+          margin-bottom: 1.5rem;
+          font-weight: 500;
+          opacity: 0.9;
         }
 
         .meta-info {
@@ -383,7 +492,6 @@
       &:hover {
         background: var(--primary-color);
         color: var(--bg-color);
-        transform: rotate(90deg);
         border-color: var(--primary-color);
       }
     }

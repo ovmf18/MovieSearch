@@ -33,7 +33,7 @@ const Home = () => {
           movieService.getUpcoming(),
           movieService.getTopRated()
         ])
-        
+
         setTrendingMovies(trending)
         setUpcomingMovies(upcoming)
         setTopRatedMovies(topRated)
@@ -51,7 +51,7 @@ const Home = () => {
     if (ref.current) {
       const { scrollLeft, clientWidth } = ref.current;
       const scrollTo = direction === 'left' ? scrollLeft - clientWidth : scrollLeft + clientWidth;
-      
+
       ref.current.scrollTo({
         left: scrollTo,
         behavior: 'smooth'
@@ -65,10 +65,10 @@ const Home = () => {
         <h2>{title}</h2>
         <p>{subtitle}</p>
       </div>
-      
+
       <div className="list-wrapper">
-        <button 
-          className="scroll-button left" 
+        <button
+          className="scroll-button left"
           onClick={() => handleScroll(scrollRef, 'left')}
           aria-label="Rolar para esquerda"
         >
@@ -77,7 +77,7 @@ const Home = () => {
 
         <div className="horizontal-list" ref={scrollRef}>
           {movies.map(movie => (
-            <MovieCard 
+            <MovieCard
               key={movie.id}
               id={movie.id}
               title={movie.title}
@@ -88,8 +88,8 @@ const Home = () => {
           ))}
         </div>
 
-        <button 
-          className="scroll-button right" 
+        <button
+          className="scroll-button right"
           onClick={() => handleScroll(scrollRef, 'right')}
           aria-label="Rolar para direita"
         >

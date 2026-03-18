@@ -12,6 +12,12 @@ interface MovieDetails {
   backdrop_path: string;
   release_date: string;
   runtime: number;
+  tagline: string;
+  original_title: string;
+  original_language: string;
+  budget: number;
+  revenue: number;
+
   vote_average: number;
   genres: { id: number; name: string }[];
   release_dates: {
@@ -26,6 +32,19 @@ interface MovieDetails {
   };
   videos?: {
     results: { id: string; key: string; name: string; site: string; type: string }[];
+  };
+  "watch/providers"?: {
+    results: {
+      [key: string]: {
+        link: string;
+        flatrate?: { logo_path: string; provider_id: number; provider_name: string }[];
+        buy?: { logo_path: string; provider_id: number; provider_name: string }[];
+        rent?: { logo_path: string; provider_id: number; provider_name: string }[];
+      };
+    };
+  };
+  images?: {
+    logos: { file_path: string }[];
   };
 }
 
@@ -66,11 +85,38 @@ const MovieDetails = () => {
   const directors = movie.credits.crew.filter(person => person.job === 'Director');
   const writers = movie.credits.crew.filter(person => person.job === 'Screenplay' || person.job === 'Writer');
 
-  const trailer = movie.videos?.results.find(vid => vid.site === 'YouTube' && vid.type === 'Trailer') || 
-                  movie.videos?.results.find(vid => vid.site === 'YouTube' && vid.type === 'Teaser');
+  const trailer = movie.videos?.results.find(vid => vid.site === 'YouTube' && vid.type === 'Trailer') ||
+    movie.videos?.results.find(vid => vid.site === 'YouTube' && vid.type === 'Teaser');
 
   const backgroundUrl = movie.backdrop_path ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}` : null;
   const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : null;
+
+  const watchProviders = movie['watch/providers']?.results['BR'];
+  const streamingProviders = watchProviders?.flatrate || [];
+
+  const rentOrBuyProviders = [...(watchProviders?.rent || []), ...(watchProviders?.buy || [])]
+    .filter((v, i, a) => a.findIndex(t => (t.provider_id === v.provider_id)) === i);
+
+  const formatRuntime = (minutes: number) => {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return `${hours}h ${mins}m`;
+  };
+
+  const formatCurrency = (amount: number) => {
+    if (!amount || amount === 0) return '-';
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(amount);
+  };
+
+  const formatLanguage = (lang: string) => {
+    try {
+      const languageNames = new Intl.DisplayNames(['pt-BR'], { type: 'language' });
+      const name = languageNames.of(lang);
+      return name ? name.charAt(0).toUpperCase() + name.slice(1) : lang;
+    } catch {
+      return lang.toUpperCase();
+    }
+  };
 
   return (
     <div className="movie-details-page">
@@ -96,12 +142,77 @@ const MovieDetails = () => {
                 <span>Pôster indisponível</span>
               </div>
             )}
+
+            {(streamingProviders.length > 0 || rentOrBuyProviders.length > 0) && (
+              <div className="watch-providers-section">
+                <h3>Onde Assistir</h3>
+                <div className="providers-container">
+                  {streamingProviders.length > 0 && (
+                    <div className="provider-group">
+                      <span>Streaming</span>
+                      <div className="provider-list">
+                        {streamingProviders.map(provider => (
+                          <img
+                            key={provider.provider_id}
+                            src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                            alt={provider.provider_name}
+                            title={provider.provider_name}
+                            className="provider-logo"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {rentOrBuyProviders.length > 0 && (
+                    <div className="provider-group">
+                      <span>Alugar / Comprar</span>
+                      <div className="provider-list">
+                        {rentOrBuyProviders.map(provider => (
+                          <img
+                            key={`rent-buy-${provider.provider_id}`}
+                            src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                            alt={provider.provider_name}
+                            title={provider.provider_name}
+                            className="provider-logo"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            <div className="side-info-section">
+              <h3>Informações</h3>
+              <div className="info-list">
+                <div className="info-item-block">
+                  <span className="info-label">Título Original</span>
+                  <span className="info-value">{movie.original_title}</span>
+                </div>
+                <div className="info-item-block">
+                  <span className="info-label">Idioma Original</span>
+                  <span className="info-value">{formatLanguage(movie.original_language)}</span>
+                </div>
+                <div className="info-item-block">
+                  <span className="info-label">Orçamento</span>
+                  <span className="info-value">{formatCurrency(movie.budget)}</span>
+                </div>
+                <div className="info-item-block">
+                  <span className="info-label">Bilheteria</span>
+                  <span className="info-value">{formatCurrency(movie.revenue)}</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="content-side">
             <h1 className="movie-title">
               {movie.title} <span>({new Date(movie.release_date).getFullYear()})</span>
             </h1>
+
+            {movie.tagline && <p className="tagline">"{movie.tagline}"</p>}
 
             <div className="meta-info">
               <span className={`certification cert-${certification.toLowerCase()}`}>
@@ -113,7 +224,7 @@ const MovieDetails = () => {
                 {movie.genres.map(g => g.name).join(', ')}
               </span>
               <span className="dot">•</span>
-              <span className="info-item"><Clock size={18} /> {movie.runtime} min</span>
+              <span className="info-item"><Clock size={18} /> {formatRuntime(movie.runtime)}</span>
             </div>
 
             <div className="rating-section">
@@ -187,10 +298,10 @@ const MovieDetails = () => {
               <X size={24} />
             </button>
             <div className="video-container">
-              <iframe 
-                src={`https://www.youtube.com/embed/${trailer.key}?autoplay=0`} 
+              <iframe
+                src={`https://www.youtube.com/embed/${trailer.key}?autoplay=0`}
                 title="Trailer do Filme"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
             </div>

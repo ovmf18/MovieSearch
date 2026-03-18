@@ -32,7 +32,10 @@ export const movieService = {
   // Busca detalhes completos de um filme específico
   getMovieDetails: async (id: string | number) => {
     const response = await api.get(`/movie/${id}`, {
-      params: { append_to_response: 'videos,credits,release_dates' }
+      params: { 
+        append_to_response: 'videos,credits,release_dates,images,watch/providers',
+        include_image_language: 'pt,en,null'
+      }
     });
     return response.data;
   },
