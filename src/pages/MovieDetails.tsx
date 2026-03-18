@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Clock, Calendar, Star, Play, ImageOff } from 'lucide-react';
+import { ArrowLeft, Clock, Calendar, Star, Play, ImageOff, X } from 'lucide-react';
 import { movieService } from '../services/api';
 import './MovieDetails.scss';
 
@@ -24,6 +24,9 @@ interface MovieDetails {
     cast: { id: number; name: string; character: string; profile_path: string }[];
     crew: { id: number; name: string; job: string }[];
   };
+  videos?: {
+    results: { id: string; key: string; name: string; site: string; type: string }[];
+  };
 }
 
 const MovieDetails = () => {
@@ -31,6 +34,7 @@ const MovieDetails = () => {
   const navigate = useNavigate();
   const [movie, setMovie] = useState<MovieDetails | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showTrailer, setShowTrailer] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -61,6 +65,9 @@ const MovieDetails = () => {
 
   const directors = movie.credits.crew.filter(person => person.job === 'Director');
   const writers = movie.credits.crew.filter(person => person.job === 'Screenplay' || person.job === 'Writer');
+
+  const trailer = movie.videos?.results.find(vid => vid.site === 'YouTube' && vid.type === 'Trailer') || 
+                  movie.videos?.results.find(vid => vid.site === 'YouTube' && vid.type === 'Teaser');
 
   const backgroundUrl = movie.backdrop_path ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}` : null;
   const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : null;
@@ -122,9 +129,11 @@ const MovieDetails = () => {
               </div>
               <span className="vote-label">Avaliação dos Usuários</span>
 
-              <button className="trailer-btn">
-                <Play size={20} fill="currentColor" /> Assista ao Trailer
-              </button>
+              {trailer && (
+                <button className="trailer-btn" onClick={() => setShowTrailer(true)}>
+                  <Play size={20} fill="currentColor" /> Assista ao Trailer
+                </button>
+              )}
             </div>
 
             <div className="overview-section">
@@ -168,6 +177,26 @@ const MovieDetails = () => {
           </div>
         </div>
       </div>
+
+      {showTrailer && trailer && (
+        <div className="trailer-modal">
+          <div className="modal-overlay" onClick={() => setShowTrailer(false)}></div>
+          <div className="modal-content">
+            <h2 className="modal-title">Trailer</h2>
+            <button className="close-modal" onClick={() => setShowTrailer(false)}>
+              <X size={24} />
+            </button>
+            <div className="video-container">
+              <iframe 
+                src={`https://www.youtube.com/embed/${trailer.key}?autoplay=0`} 
+                title="Trailer do Filme"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
