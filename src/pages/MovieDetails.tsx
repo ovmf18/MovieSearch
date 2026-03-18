@@ -77,7 +77,7 @@ const MovieDetails = () => {
 
   // Encontrar a data de lançamento e classificação no Brasil
   const brRelease = movie.release_dates.results.find(r => r.iso_3166_1 === 'BR');
-  const certification = brRelease?.release_dates.find(rd => rd.certification !== '')?.certification || 'L';
+  const certification = brRelease?.release_dates.find(rd => rd.certification !== '')?.certification || '?';
   const brDate = brRelease
     ? new Date(brRelease.release_dates[0].release_date).toLocaleDateString('pt-BR')
     : new Date(movie.release_date).toLocaleDateString('pt-BR');
@@ -215,7 +215,7 @@ const MovieDetails = () => {
             {movie.tagline && <p className="tagline">"{movie.tagline}"</p>}
 
             <div className="meta-info">
-              <span className={`certification cert-${certification.toLowerCase()}`}>
+              <span className={`certification ${certification === '?' ? 'cert-unknown' : `cert-${certification.toLowerCase()}`}`}>
                 {certification}
               </span>
               <span className="info-item"><Calendar size={18} /> {brDate} (BR)</span>

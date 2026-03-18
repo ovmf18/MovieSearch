@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, NavLink } from 'react-router-dom';
 import { Clapperboard, Search, Star, ImageOff, X } from 'lucide-react';
 import { movieService } from '../services/api';
 import './Navbar.scss';
@@ -65,9 +65,9 @@ const Navbar = () => {
         </Link>
 
         <ul className="nav-links">
-          <li><Link to="/">Em Alta</Link></li>
-          <li><Link to="/">Lançamentos</Link></li>
-          <li><Link to="/">Melhores da História</Link></li>
+          <li><NavLink to="/" end>Em Alta</NavLink></li>
+          <li><NavLink to="/upcoming">Lançamentos</NavLink></li>
+          <li><NavLink to="/top-rated">Melhores da História</NavLink></li>
         </ul>
 
         <div className="nav-actions" ref={searchRef}>
