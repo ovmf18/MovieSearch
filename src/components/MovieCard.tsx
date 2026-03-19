@@ -13,10 +13,14 @@ interface MovieCardProps {
 const MovieCard = ({ id, title, posterPath, releaseDate, voteAverage }: MovieCardProps) => {
   const imageUrl = posterPath ? `https://image.tmdb.org/t/p/w500${posterPath}` : null;
 
-  // Formatar a data para o padrão brasileiro
-  const formattedDate = releaseDate && !isNaN(Date.parse(releaseDate))
-    ? new Date(releaseDate).toLocaleDateString('pt-BR')
-    : 'Data indisponível';
+  // Formatar a data para o padrão brasileiro (corrigindo bug de timezone)
+  const formatBRDate = (dateStr: string) => {
+    if (!dateStr || isNaN(Date.parse(dateStr))) return 'Data indisponível';
+    const [year, month, day] = dateStr.split('-').map(Number);
+    return `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
+  };
+
+  const formattedDate = releaseDate ? formatBRDate(releaseDate) : 'Data indisponível';
 
   // Determinar a cor da nota
   const getColorClass = (rating: number) => {

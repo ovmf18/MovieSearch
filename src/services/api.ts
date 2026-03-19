@@ -9,23 +9,33 @@ const api = axios.create({
 });
 
 export const movieService = {
-  // Pega os filmes que estão em alta na semana
+  // Pega os filmes mais populares no Brasil no momento (Em Alta)
   getTrending: async () => {
-    const response = await api.get('/trending/movie/week');
-    return response.data.results;
-  },
-  
-  // Pega os próximos lançamentos
-  getUpcoming: async () => {
-    const response = await api.get('/movie/upcoming', {
-      params: { region: 'BR' } // Foca em lançamentos no Brasil
+    const response = await api.get('/discover/movie', {
+      params: { 
+        region: 'BR',
+        sort_by: 'popularity.desc'
+      }
     });
     return response.data.results;
   },
+  
+  // Pega os próximos lançamentos NO BRASIL (com suporte a paginação)
+  getUpcoming: async (page: number = 1) => {
+    const response = await api.get('/movie/upcoming', {
+      params: { 
+        region: 'BR',
+        page: page 
+      }
+    });
+    return response.data; // Retornamos o objeto completo agora (results, pages, etc)
+  },
 
-  // Pega os filmes mais bem avaliados da história
+  // Pega os filmes mais bem avaliados (Filtrado por região para maior precisão)
   getTopRated: async () => {
-    const response = await api.get('/movie/top_rated');
+    const response = await api.get('/movie/top_rated', {
+      params: { region: 'BR' }
+    });
     return response.data.results;
   },
 

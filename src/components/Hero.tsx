@@ -151,7 +151,7 @@ const Hero = ({ backdropPath, featuredMovieId, mode = 'search' }: HeroProps) => 
                         <div className="item-meta">
                           <span>
                             {movie.release_date
-                              ? new Date(movie.release_date).getFullYear()
+                              ? movie.release_date.split('-')[0]
                               : 'N/A'}
                           </span>
                           <div className="item-rating">
