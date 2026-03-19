@@ -13,7 +13,6 @@ interface MovieCardProps {
 const MovieCard = ({ id, title, posterPath, releaseDate, voteAverage }: MovieCardProps) => {
   const imageUrl = posterPath ? `https://image.tmdb.org/t/p/w500${posterPath}` : null;
 
-  // Formatar a data para o padrão brasileiro (corrigindo bug de timezone)
   const formatBRDate = (dateStr: string) => {
     if (!dateStr || isNaN(Date.parse(dateStr))) return 'Data indisponível';
     const [year, month, day] = dateStr.split('-').map(Number);

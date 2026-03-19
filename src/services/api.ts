@@ -9,7 +9,6 @@ const api = axios.create({
 });
 
 export const movieService = {
-  // Pega os filmes mais populares no Brasil no momento (Em Alta)
   getTrending: async () => {
     const response = await api.get('/discover/movie', {
       params: { 
@@ -20,7 +19,6 @@ export const movieService = {
     return response.data.results;
   },
   
-  // Pega os próximos lançamentos NO BRASIL (com suporte a paginação)
   getUpcoming: async (page: number = 1) => {
     const response = await api.get('/movie/upcoming', {
       params: { 
@@ -28,10 +26,9 @@ export const movieService = {
         page: page 
       }
     });
-    return response.data; // Retornamos o objeto completo agora (results, pages, etc)
+    return response.data; 
   },
 
-  // Pega os filmes mais bem avaliados (Filtrado por região para maior precisão)
   getTopRated: async () => {
     const response = await api.get('/movie/top_rated', {
       params: { region: 'BR' }
@@ -39,7 +36,6 @@ export const movieService = {
     return response.data.results;
   },
 
-  // Busca detalhes completos de um filme específico
   getMovieDetails: async (id: string | number) => {
     const response = await api.get(`/movie/${id}`, {
       params: { 
@@ -50,13 +46,10 @@ export const movieService = {
     return response.data;
   },
 
-  // Busca as datas de lançamento separadamente se necessário
   getReleaseDates: async (id: string | number) => {
     const response = await api.get(`/movie/${id}/release_dates`);
     return response.data.results;
   },
-
-  // Realiza a busca de filmes por texto
   searchMovies: async (query: string) => {
     const response = await api.get('/search/movie', {
       params: { query },

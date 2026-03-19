@@ -75,19 +75,16 @@ const MovieDetails = () => {
   if (loading) return <div className="loading-screen">Carregando detalhes...</div>;
   if (!movie) return <div className="error-screen">Filme não encontrado.</div>;
 
-  // Formatar a data para o padrão brasileiro (corrigindo bug de timezone)
   const formatBRDate = (dateStr: string) => {
     if (!dateStr || isNaN(Date.parse(dateStr))) return 'Data indisponível';
     const [year, month, day] = dateStr.slice(0, 10).split('-').map(Number);
     return `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
   };
 
-  // Encontrar a data de lançamento e classificação no Brasil
   const brRelease = movie.release_dates.results.find(r => r.iso_3166_1 === 'BR');
-  
-  // Priorizar o lançamento nos cinemas (type 3) se existir
+
   const brTheatrical = brRelease?.release_dates.find(rd => rd.type === 3) || brRelease?.release_dates[0];
-  
+
   const certification = brRelease?.release_dates.find(rd => rd.certification !== '')?.certification || '?';
   const rawDate = brTheatrical?.release_date || movie.release_date;
   const brDate = formatBRDate(rawDate);
