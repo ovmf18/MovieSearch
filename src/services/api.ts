@@ -31,11 +31,15 @@ export const movieService = {
     return response.data; 
   },
 
-  getTopRated: async () => {
+  // Pega os filmes mais bem avaliados (com paginação)
+  getTopRated: async (page: number = 1) => {
     const response = await api.get('/movie/top_rated', {
-      params: { region: 'BR' }
+      params: { 
+        region: 'BR',
+        page: page
+      }
     });
-    return response.data.results;
+    return response.data;
   },
 
   getMovieDetails: async (id: string | number) => {

@@ -28,7 +28,7 @@ const Home = () => {
   useEffect(() => {
     const fetchAllMovies = async () => {
       try {
-        const [trendingRes, upcomingRes, topRated] = await Promise.all([
+        const [trendingRes, upcomingRes, topRatedRes] = await Promise.all([
           movieService.getTrending(),
           movieService.getUpcoming(),
           movieService.getTopRated()
@@ -36,7 +36,7 @@ const Home = () => {
 
         setTrendingMovies(trendingRes.results)
         setUpcomingMovies(upcomingRes.results)
-        setTopRatedMovies(topRated)
+        setTopRatedMovies(topRatedRes.results)
       } catch (error) {
         console.error("Erro ao buscar filmes:", error)
       } finally {
