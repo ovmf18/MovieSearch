@@ -1,10 +1,19 @@
 .movie-card {
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  min-width: 0; 
   transition: var(--transition);
   cursor: pointer;
 
-  @include mobile {
-    min-width: 140px;
+  .horizontal-list & {
+    flex: 0 0 200px;
+    width: 200px;
+
+    @include mobile {
+      flex: 0 0 140px;
+      width: 140px;
+    }
   }
 
   .poster-wrapper {
@@ -22,6 +31,30 @@
       height: 100%;
       object-fit: cover;
       transition: var(--transition);
+    }
+
+    .no-image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: var(--text-muted);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+
+      span {
+        font-size: 0.85rem;
+        font-weight: 500;
+        text-align: center;
+        padding: 0 10px;
+        opacity: 0.6;
+      }
+
+      svg {
+        opacity: 0.3;
+      }
     }
 
     .rating-badge {
