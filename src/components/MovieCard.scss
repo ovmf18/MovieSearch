@@ -1,8 +1,11 @@
 .movie-card {
-  min-width: 200px;
-  max-width: 200px;
+  width: 100%;
   transition: var(--transition);
   cursor: pointer;
+
+  @include mobile {
+    min-width: 140px;
+  }
 
   .poster-wrapper {
     position: relative;
@@ -19,24 +22,6 @@
       height: 100%;
       object-fit: cover;
       transition: var(--transition);
-    }
-
-    .no-image-placeholder {
-      width: 100%;
-      height: 100%;
-      background: #1a1a1a;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-      color: #333;
-      font-size: 0.9rem;
-      font-weight: 600;
-
-      svg {
-        opacity: 0.5;
-      }
     }
 
     .rating-badge {
@@ -58,6 +43,14 @@
       border: 2px solid var(--bg-color);
       transition: var(--transition);
 
+      @include mobile {
+        width: 30px;
+        height: 30px;
+        font-size: 0.75rem;
+        bottom: 5px;
+        left: 5px;
+      }
+
       &.high { background-color: var(--rating-high); }
       &.mid { background-color: var(--rating-mid); }
       &.low { background-color: var(--rating-low); }
@@ -76,6 +69,10 @@
       justify-content: center;
       opacity: 0;
       transition: var(--transition);
+
+      @include mobile {
+        display: none; 
+      }
 
       .view-details {
         background-color: var(--primary-color);
@@ -98,6 +95,10 @@
     margin-top: 12px;
     padding: 0 4px;
 
+    @include mobile {
+      margin-top: 8px;
+    }
+
     h3 {
       font-size: 1rem;
       font-weight: 600;
@@ -106,37 +107,47 @@
       overflow: hidden;
       text-overflow: ellipsis;
       margin-bottom: 4px;
+
+      @include mobile {
+        font-size: 0.9rem;
+      }
     }
 
     span {
       display: block;
       font-size: 0.85rem;
       color: var(--text-muted);
+
+      @include mobile {
+        font-size: 0.8rem;
+      }
     }
   }
 
   &:hover {
-    transform: translateY(-8px);
+    @media (min-width: 769px) {
+      transform: translateY(-8px);
 
-    .poster-wrapper {
-      box-shadow: 0 10px 30px rgba(0, 223, 130, 0.2);
-      border-color: var(--primary-color);
+      .poster-wrapper {
+        box-shadow: 0 10px 30px rgba(0, 223, 130, 0.2);
+        border-color: var(--primary-color);
 
-      img {
-        transform: scale(1.1);
-      }
+        img {
+          transform: scale(1.1);
+        }
 
-      .overlay {
-        opacity: 1;
+        .overlay {
+          opacity: 1;
 
-        .view-details {
-          transform: translateY(0);
+          .view-details {
+            transform: translateY(0);
+          }
         }
       }
-    }
 
-    .movie-info h3 {
-      color: var(--primary-color);
+      .movie-info h3 {
+        color: var(--primary-color);
+      }
     }
   }
 }

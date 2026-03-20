@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, NavLink } from 'react-router-dom';
-import { Clapperboard, Search, Star, ImageOff, X } from 'lucide-react';
+import { Clapperboard, Search, Star, ImageOff, X, Menu } from 'lucide-react';
 import { movieService } from '../services/api';
 import './Navbar.scss';
 
@@ -14,6 +14,7 @@ interface MovieResult {
 
 const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [results, setResults] = useState<MovieResult[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -51,29 +52,49 @@ const Navbar = () => {
     if (searchQuery.trim()) {
       setShowDropdown(false);
       setIsSearchOpen(false);
+      setIsMenuOpen(false);
       navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
       setSearchQuery('');
     }
   };
 
+  const closeMenus = () => {
+    setIsMenuOpen(false);
+    setIsSearchOpen(false);
+    setShowDropdown(false);
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <Link to="/" className="logo">
-          <Clapperboard color="#00df82" size={32} />
-          <h1>Movie<span>Search</span></h1>
-        </Link>
+        <div className="nav-left">
+          <button
+            className="menu-toggle"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Menu"
+          >
+            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
 
-        <ul className="nav-links">
-          <li><NavLink to="/trending">Em Alta</NavLink></li>
-          <li><NavLink to="/upcoming">Lançamentos</NavLink></li>
-          <li><NavLink to="/top-rated">Melhores da História</NavLink></li>
+          <Link to="/" className="logo" onClick={closeMenus}>
+            <Clapperboard color="#00df82" size={32} />
+            <h1>Movie<span>Search</span></h1>
+          </Link>
+        </div>
+
+        <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
+          <li><NavLink to="/trending" onClick={closeMenus}>Em Alta</NavLink></li>
+          <li><NavLink to="/upcoming" onClick={closeMenus}>Lançamentos</NavLink></li>
+          <li><NavLink to="/top-rated" onClick={closeMenus}>Melhores da História</NavLink></li>
         </ul>
 
         <div className="nav-actions" ref={searchRef}>
           <div className={`nav-search-container ${isSearchOpen ? 'open' : ''}`}>
             {!isSearchOpen ? (
-              <button className="search-icon-btn" onClick={() => setIsSearchOpen(true)}>
+              <button
+                className="search-icon-btn"
+                onClick={() => { setIsSearchOpen(true); setIsMenuOpen(false); }}
+              >
                 <Search size={24} color="#ffffff" />
               </button>
             ) : (
@@ -93,7 +114,6 @@ const Navbar = () => {
               </form>
             )}
 
-            {/* Dropdown in Navbar */}
             {showDropdown && results.length > 0 && isSearchOpen && (
               <div className="nav-search-dropdown">
                 {results.map(movie => (
@@ -134,6 +154,8 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+
+      {isMenuOpen && <div className="nav-overlay" onClick={closeMenus}></div>}
     </nav>
   );
 };

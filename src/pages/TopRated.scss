@@ -4,7 +4,13 @@
   .top-rated-main {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 2rem 4rem;
+    @include tablet {
+      padding: 2rem;
+    }
+
+    @include mobile {
+      padding: 1rem 1.5rem;
+    }
 
     .top-rated-section {
       margin-bottom: 4rem;
@@ -17,11 +23,19 @@
           font-weight: 700;
           color: #fff;
           margin-bottom: 0.5rem;
+
+          @include mobile {
+            font-size: 1.8rem;
+          }
         }
 
         p {
           color: var(--text-muted);
           font-size: 1.1rem;
+
+          @include mobile {
+            font-size: 1rem;
+          }
         }
       }
 
@@ -29,12 +43,26 @@
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         gap: 2rem;
+
+        @include tablet {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.5rem;
+        }
+
+        @include mobile {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1rem;
+        }
       }
 
       .load-more-container {
         display: flex;
         justify-content: center;
         margin-top: 4rem;
+
+        @include mobile {
+          margin-top: 2.5rem;
+        }
 
         .load-more-btn {
           padding: 1rem 3rem;
@@ -46,6 +74,12 @@
           font-size: 1.1rem;
           cursor: pointer;
           transition: var(--transition);
+
+          @include mobile {
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            width: 100%;
+          }
 
           &:hover:not(:disabled) {
             background: var(--primary-color);
@@ -71,10 +105,18 @@
       border-radius: 30px;
       border: 1px dashed rgba(255, 255, 255, 0.1);
 
+      @include mobile {
+        padding: 4rem 1rem;
+      }
+
       h2 {
         font-size: 2.5rem;
         color: var(--primary-color);
         margin-bottom: 1rem;
+
+        @include mobile {
+          font-size: 1.8rem;
+        }
       }
     }
   }
@@ -83,15 +125,4 @@
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-@media (max-width: 768px) {
-  .top-rated-page .top-rated-main {
-    padding: 1rem 2rem;
-    
-    .top-rated-section .movie-grid {
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 1.5rem;
-    }
-  }
 }

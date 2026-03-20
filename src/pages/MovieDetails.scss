@@ -42,6 +42,11 @@
     padding: 2rem;
     padding-top: 4rem;
 
+    @include mobile {
+      padding: 1rem 1.5rem;
+      padding-top: 2rem;
+    }
+
     .back-button {
       display: flex;
       align-items: center;
@@ -56,6 +61,12 @@
       margin-bottom: 3rem;
       backdrop-filter: blur(10px);
 
+      @include mobile {
+        margin-bottom: 2rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+
       &:hover {
         background: var(--primary-color);
         color: var(--bg-color);
@@ -68,12 +79,32 @@
       grid-template-columns: 350px 1fr;
       gap: 4rem;
 
+      @include tablet {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
       .poster-side {
+        @include tablet {
+          display: contents;
+        }
+
         .detail-poster {
           width: 100%;
           border-radius: 12px;
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
           border: 1px solid rgba(255, 255, 255, 0.1);
+
+          @include tablet {
+            order: 1;
+            max-width: 300px;
+            margin: 0 auto 2rem;
+          }
+
+          @include mobile {
+            max-width: 250px;
+          }
 
           &.missing {
             aspect-ratio: 2/3;
@@ -99,6 +130,11 @@
           border: 1px solid rgba(255, 255, 255, 0.05);
           border-radius: 12px;
           padding: 1.5rem;
+
+          @include tablet {
+            order: 3;
+            margin-top: 1rem;
+          }
 
           h3 {
             font-size: 1.2rem;
@@ -158,6 +194,11 @@
           border-radius: 12px;
           padding: 1.5rem;
 
+          @include tablet {
+            order: 4;
+            margin-top: 1rem;
+          }
+
           h3 {
             font-size: 1.2rem;
             color: var(--primary-color);
@@ -195,10 +236,24 @@
       }
 
       .content-side {
+        @include tablet {
+          display: contents;
+        }
+
         .movie-title {
           font-size: 3.5rem;
           font-weight: 800;
           margin-bottom: 1rem;
+
+          @include tablet {
+            order: 2;
+            font-size: 2.8rem;
+            text-align: center;
+          }
+
+          @include mobile {
+            font-size: 2.2rem;
+          }
 
           span {
             font-weight: 400;
@@ -213,6 +268,16 @@
           margin-bottom: 1.5rem;
           font-weight: 500;
           opacity: 0.9;
+
+          @include tablet {
+            order: 2;
+            font-size: 1.1rem;
+            text-align: center;
+          }
+
+          @include mobile {
+            font-size: 1rem;
+          }
         }
 
         .meta-info {
@@ -222,6 +287,14 @@
           font-size: 1.1rem;
           color: var(--text-muted);
           margin-bottom: 2rem;
+
+          @include tablet {
+            order: 2;
+            flex-wrap: wrap;
+            font-size: 1rem;
+            gap: 0.5rem 1rem;
+            justify-content: center;
+          }
 
           .certification {
             width: 32px;
@@ -253,6 +326,10 @@
 
           .dot {
             opacity: 0.3;
+
+            @include mobile {
+              display: none;
+            }
           }
         }
 
@@ -261,6 +338,13 @@
           align-items: center;
           gap: 1.5rem;
           margin-bottom: 3rem;
+
+          @include tablet {
+            order: 2;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+          }
 
           .score-badge {
             display: flex;
@@ -302,6 +386,12 @@
             cursor: pointer;
             transition: var(--transition);
 
+            @include tablet {
+              margin-left: 0;
+              width: 100%;
+              justify-content: center;
+            }
+
             &:hover {
               background: var(--rating-high);
               border-color: var(--rating-high);
@@ -313,18 +403,40 @@
         .overview-section {
           margin-bottom: 2rem;
 
+          @include tablet {
+            order: 2;
+          }
+
           h3 {
             font-size: 1.5rem;
             color: var(--primary-color);
             margin-bottom: 1rem;
             text-transform: uppercase;
             letter-spacing: 2px;
+
+            @include tablet {
+              font-size: 1.3rem;
+              text-align: center;
+            }
+
+            @include mobile {
+              font-size: 1.2rem;
+            }
           }
 
           p {
             font-size: 1.2rem;
             line-height: 1.8;
             color: rgba(255, 255, 255, 0.8);
+
+            @include tablet {
+              font-size: 1.15rem;
+              text-align: center;
+            }
+
+            @include mobile {
+              font-size: 1.05rem;
+            }
           }
         }
 
@@ -334,6 +446,14 @@
           margin-bottom: 3rem;
           padding-top: 1.5rem;
           border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+          @include tablet {
+            order: 2;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+            text-align: center;
+          }
 
           .crew-item {
             strong {
@@ -351,18 +471,37 @@
         }
 
         .cast-section {
+          @include tablet {
+            order: 2;
+            margin-bottom: 3rem;
+          }
+
           h3 {
             font-size: 1.5rem;
             color: var(--primary-color);
             margin-bottom: 1.5rem;
             text-transform: uppercase;
             letter-spacing: 2px;
+
+            @include tablet {
+              font-size: 1.3rem;
+              text-align: center;
+            }
+
+            @include mobile {
+              font-size: 1.2rem;
+            }
           }
 
           .cast-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 1.5rem;
+
+            @include mobile {
+              grid-template-columns: repeat(2, 1fr);
+              gap: 1rem;
+            }
 
             .cast-card {
               background: rgba(255, 255, 255, 0.03);
@@ -415,16 +554,6 @@
   }
 }
 
-@media (max-width: 1024px) {
-  .movie-details-page .details-container .main-info {
-    grid-template-columns: 1fr;
-    
-    .poster-side {
-      display: none;
-    }
-  }
-}
-
 // Modal do Trailer
 .trailer-modal {
   position: fixed;
@@ -471,6 +600,11 @@
       letter-spacing: 2px;
       margin: 0;
       z-index: 2002;
+
+      @include mobile {
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+      }
     }
 
     .close-modal {
