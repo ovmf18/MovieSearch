@@ -9,14 +9,16 @@ const api = axios.create({
 });
 
 export const movieService = {
-  getTrending: async () => {
+  // Pega os filmes populares no Brasil (suporta paginação para a nova página)
+  getTrending: async (page: number = 1) => {
     const response = await api.get('/discover/movie', {
       params: { 
         region: 'BR',
-        sort_by: 'popularity.desc'
+        sort_by: 'popularity.desc',
+        page: page
       }
     });
-    return response.data.results;
+    return response.data;
   },
   
   getUpcoming: async (page: number = 1) => {

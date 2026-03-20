@@ -65,7 +65,7 @@ const Navbar = () => {
         </Link>
 
         <ul className="nav-links">
-          <li><NavLink to="/" end>Em Alta</NavLink></li>
+          <li><NavLink to="/trending">Em Alta</NavLink></li>
           <li><NavLink to="/upcoming">Lançamentos</NavLink></li>
           <li><NavLink to="/top-rated">Melhores da História</NavLink></li>
         </ul>

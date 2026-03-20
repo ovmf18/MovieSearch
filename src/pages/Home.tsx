@@ -28,13 +28,13 @@ const Home = () => {
   useEffect(() => {
     const fetchAllMovies = async () => {
       try {
-        const [trending, upcomingRes, topRated] = await Promise.all([
+        const [trendingRes, upcomingRes, topRated] = await Promise.all([
           movieService.getTrending(),
           movieService.getUpcoming(),
           movieService.getTopRated()
         ])
 
-        setTrendingMovies(trending)
+        setTrendingMovies(trendingRes.results)
         setUpcomingMovies(upcomingRes.results)
         setTopRatedMovies(topRated)
       } catch (error) {
@@ -107,7 +107,7 @@ const Home = () => {
         <>
           <Hero backdropPath={trendingMovies[0]?.backdrop_path} />
           <main className="home-main">
-            {renderSection("🎬 Em Alta", "Os filmes de maior sucesso nesta semana", trendingMovies, trendingRef as React.RefObject<HTMLDivElement>)}
+            {renderSection("🎬 Em Alta", "Os filmes de maior sucesso no Brasil do momento", trendingMovies, trendingRef as React.RefObject<HTMLDivElement>)}
             {renderSection("📅 Lançamentos", "Próximas estreias no Brasil", upcomingMovies, upcomingRef as React.RefObject<HTMLDivElement>)}
             {renderSection("🏆 Melhores da História", "Os filmes mais bem avaliados pelos usuários", topRatedMovies, topRatedRef as React.RefObject<HTMLDivElement>)}
           </main>
