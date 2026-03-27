@@ -586,6 +586,42 @@
       }
     }
   }
+
+  .similar-movies-section {
+    max-width: 1300px;
+    margin: 4rem auto 0;
+    padding: 0 2rem;
+
+    @include mobile {
+      padding: 0 1.5rem;
+      margin: 3rem auto 0;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: #fff;
+    }
+
+    .list-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      .horizontal-list {
+        display: flex;
+        overflow-x: auto;
+        gap: 1.5rem;
+        padding: 1rem 0;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+    }
+  }
 }
 
 // Modal do Trailer

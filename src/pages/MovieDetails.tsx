@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Clock, Calendar, Star, Play, ImageOff, X, Bookmark } from 'lucide-react';
 import { movieService } from '../services/api';
 import { useWatchlist } from '../context/WatchlistContext';
+import MovieCard from '../components/MovieCard';
 import './MovieDetails.scss';
 
 interface MovieDetails {
@@ -49,10 +50,20 @@ interface MovieDetails {
   };
 }
 
+interface SimilarMovie {
+  id: number;
+  title: string;
+  poster_path: string;
+  backdrop_path: string;
+  release_date: string;
+  vote_average: number;
+}
+
 const MovieDetails = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [movie, setMovie] = useState<MovieDetails | null>(null);
+  const [similarMovies, setSimilarMovies] = useState<SimilarMovie[]>([]);
   const [loading, setLoading] = useState(true);
   const [showTrailer, setShowTrailer] = useState(false);
 
@@ -78,9 +89,12 @@ const MovieDetails = () => {
   useEffect(() => {
     const fetchDetails = async () => {
       if (!id) return;
+      setLoading(true);
       try {
         const data = await movieService.getMovieDetails(id);
+        const similarData = await movieService.getSimilarMovies(id);
         setMovie(data);
+        setSimilarMovies(similarData.results.slice(0, 5));
       } catch (error) {
         console.error("Erro ao buscar detalhes:", error);
       } finally {
@@ -324,6 +338,26 @@ const MovieDetails = () => {
           </div>
         </div>
       </div>
+
+      {similarMovies.length > 0 && (
+        <div className="similar-movies-section">
+          <h2>Mais Títulos Semelhantes a {movie.title}</h2>
+          <div className="list-wrapper">
+            <div className="horizontal-list">
+              {similarMovies.map(similar => (
+                <MovieCard
+                  key={`similar-${similar.id}`}
+                  id={similar.id}
+                  title={similar.title}
+                  posterPath={similar.poster_path}
+                  releaseDate={similar.release_date}
+                  voteAverage={similar.vote_average}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {showTrailer && trailer && (
         <div className="trailer-modal">

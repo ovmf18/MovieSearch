@@ -63,6 +63,17 @@ export const movieService = {
     return response.data.results;
   },
 
+  getSimilarMovies: async (id: string | number) => {
+    const response = await api.get(`/movie/${id}/similar`, {
+      params: { 
+        language: 'pt-BR',
+        page: 1
+      }
+    });
+    return response.data;
+  },
+
+
 };
 
 export default api;
