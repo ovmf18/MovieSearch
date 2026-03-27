@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { movieService } from '../services/api';
 import Hero from '../components/Hero';
 import MovieCard from '../components/MovieCard';
+import SkeletonCard from '../components/SkeletonCard';
 import './TopRated.scss';
 
 interface Movie {
@@ -60,7 +61,24 @@ const TopRated = () => {
   };
 
   if (loading && page === 1) {
-    return <div className="loading">Carregando as lendas do cinema...</div>;
+    return (
+      <div className="top-rated-page">
+        <div className="hero-skeleton shimmer"></div>
+        <main className="top-rated-main">
+          <section className="top-rated-section">
+            <div className="section-header">
+              <h2>🏆 Melhores da História</h2>
+              <p>Os filmes com a maior nota média e aclamação do público através dos anos.</p>
+            </div>
+            <div className="movie-grid">
+              {Array.from({ length: 20 }).map((_, idx) => (
+                <SkeletonCard key={`skeleton-${idx}`} />
+              ))}
+            </div>
+          </section>
+        </main>
+      </div>
+    );
   }
 
   const firstMovie = movies[0];

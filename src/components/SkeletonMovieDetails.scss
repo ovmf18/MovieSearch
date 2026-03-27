@@ -1,0 +1,85 @@
+.skeleton-details-page {
+  .skeleton-back-btn {
+    width: 100px;
+    height: 40px;
+    border-radius: 30px;
+    margin-bottom: 3rem;
+  }
+
+
+  .skeleton-box, .skeleton-text {
+    border-radius: 4px;
+    background: linear-gradient(90deg, #1f2128 25%, #2a2d36 50%, #1f2128 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+  }
+
+  .skeleton-main-poster {
+    width: 100%;
+    aspect-ratio: 2/3;
+    border-radius: 12px;
+    max-width: 300px;
+    margin: 0 auto;
+    background: linear-gradient(90deg, #1f2128 25%, #2a2d36 50%, #1f2128 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+  }
+
+  .content-side {
+    .title {
+      height: 3.5rem;
+      width: 70%;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+    }
+    
+    .subtitle {
+      height: 1.5rem;
+      width: 40%;
+      margin-bottom: 2rem;
+    }
+
+    .skeleton-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+
+      .cert { width: 32px; height: 32px; }
+      .meta-text { height: 1.1rem; width: 100px; }
+      .meta-text-long { height: 1.1rem; width: 200px; }
+    }
+
+    .skeleton-rating-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+
+      .rating-badge { width: 80px; height: 45px; border-radius: 12px; }
+      .action-btn { width: 200px; height: 48px; border-radius: 30px; }
+    }
+
+    .skeleton-overview {
+      margin-bottom: 2rem;
+
+      .overview-title { height: 1.5rem; width: 150px; margin-bottom: 1rem; }
+      .line { height: 1.2rem; width: 100%; margin-bottom: 8px; }
+      .line-90 { height: 1.2rem; width: 90%; margin-bottom: 8px; }
+      .line-95 { height: 1.2rem; width: 95%; margin-bottom: 8px; }
+      .line-60 { height: 1.2rem; width: 60%; }
+    }
+
+    .skeleton-cast-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+
+      .cast-card {
+        height: 180px;
+        border-radius: 12px;
+      }
+    }
+  }
+}

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { movieService } from '../services/api';
 import Hero from '../components/Hero';
 import MovieCard from '../components/MovieCard';
+import SkeletonCard from '../components/SkeletonCard';
 import './Upcoming.scss';
 
 interface Movie {
@@ -74,7 +75,23 @@ const Upcoming = () => {
   };
 
   if (loading && page === 1) {
-    return <div className="loading">Carregando novidades...</div>;
+    return (
+      <div className="upcoming-page">
+        <div className="hero-skeleton shimmer"></div>
+        <main className="upcoming-main">
+          <section className="upcoming-section">
+            <div className="section-header">
+              <h2>📅 Próximas Estreias</h2>
+            </div>
+            <div className="movie-grid">
+              {Array.from({ length: 20 }).map((_, idx) => (
+                <SkeletonCard key={`skeleton-${idx}`} />
+              ))}
+            </div>
+          </section>
+        </main>
+      </div>
+    );
   }
 
   const otherMovies = upcomingMovies.slice(1);

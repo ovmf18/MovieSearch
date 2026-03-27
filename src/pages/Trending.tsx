@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { movieService } from '../services/api';
 import Hero from '../components/Hero';
 import MovieCard from '../components/MovieCard';
+import SkeletonCard from '../components/SkeletonCard';
 import './Trending.scss';
 
 interface Movie {
@@ -60,7 +61,24 @@ const Trending = () => {
   };
 
   if (loading && page === 1) {
-    return <div className="loading">Carregando filmes em alta...</div>;
+    return (
+      <div className="trending-page">
+        <div className="hero-skeleton shimmer"></div>
+        <main className="trending-main">
+          <section className="trending-section">
+            <div className="section-header">
+              <h2>🎬 Em Alta</h2>
+              <p>Os filmes de maior sucesso e popularidade no momento.</p>
+            </div>
+            <div className="movie-grid">
+              {Array.from({ length: 20 }).map((_, idx) => (
+                <SkeletonCard key={`skeleton-${idx}`} />
+              ))}
+            </div>
+          </section>
+        </main>
+      </div>
+    );
   }
 
   const firstMovie = movies[0];

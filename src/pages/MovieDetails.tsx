@@ -4,6 +4,7 @@ import { ArrowLeft, Clock, Calendar, Star, Play, ImageOff, X, Bookmark } from 'l
 import { movieService } from '../services/api';
 import { useWatchlist } from '../context/WatchlistContext';
 import MovieCard from '../components/MovieCard';
+import SkeletonMovieDetails from '../components/SkeletonMovieDetails';
 import './MovieDetails.scss';
 
 interface MovieDetails {
@@ -106,7 +107,7 @@ const MovieDetails = () => {
     window.scrollTo(0, 0);
   }, [id]);
 
-  if (loading) return <div className="loading-screen">Carregando detalhes...</div>;
+  if (loading) return <SkeletonMovieDetails />;
   if (!movie) return <div className="error-screen">Filme não encontrado.</div>;
 
   const formatBRDate = (dateStr: string) => {
