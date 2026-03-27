@@ -6,6 +6,7 @@ import Upcoming from './pages/Upcoming'
 import Trending from './pages/Trending'
 import TopRated from './pages/TopRated'
 import Watchlist from './pages/Watchlist'
+import PersonDetails from './pages/PersonDetails'
 import Navbar from './components/Navbar'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/trending" element={<Trending />} />
           <Route path="/top-rated" element={<TopRated />} />
           <Route path="/watchlist" element={<Watchlist />} />
+          <Route path="/person/:id" element={<PersonDetails />} />
         </Routes>
       </div>
     </Router>

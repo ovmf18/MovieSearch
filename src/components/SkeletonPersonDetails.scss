@@ -1,0 +1,76 @@
+.skeleton-person-page {
+  .skeleton-back-btn {
+    width: 100px;
+    height: 40px;
+    border-radius: 30px;
+    margin-bottom: 3rem;
+  }
+
+  .main-info {
+    .profile-side {
+      .skeleton-profile-poster {
+        width: 100%;
+        aspect-ratio: 2/3;
+        border-radius: 12px;
+        margin-bottom: 2rem;
+      }
+
+      .skeleton-personal-info {
+        .info-header { width: 150px; height: 1.2rem; margin-bottom: 1.5rem; }
+        
+        .skeleton-info-block {
+          margin-bottom: 1rem;
+          .label { width: 80px; height: 0.9rem; margin-bottom: 4px; }
+          .value { width: 120px; height: 1.05rem; }
+        }
+      }
+    }
+
+    .content-side {
+      .person-name {
+        width: 60%;
+        height: 3.5rem;
+        margin-bottom: 2rem;
+        border-radius: 8px;
+
+        @media (max-width: 768px) {
+          margin: 0 auto 2rem;
+        }
+      }
+
+      .skeleton-section {
+        margin-bottom: 3rem;
+
+        .section-title { width: 150px; height: 1.5rem; margin-bottom: 1rem; }
+        .bio-line { width: 100%; height: 1.15rem; margin-bottom: 1rem; }
+        .bio-line-95 { width: 95%; height: 1.15rem; margin-bottom: 1rem; }
+        .bio-line-90 { width: 90%; height: 1.15rem; margin-bottom: 1rem; }
+        .bio-line-60 { width: 60%; height: 1.15rem; }
+      }
+
+      .skeleton-known-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1.5rem;
+
+        @media (max-width: 768px) {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .skeleton-movie-credit {
+          .movie-card-skeleton {
+            width: 100%;
+            aspect-ratio: 2/3;
+            border-radius: 12px;
+            margin-bottom: 10px;
+          }
+          .credit-text {
+            width: 80%;
+            height: 0.85rem;
+            margin: 0 auto;
+          }
+        }
+      }
+    }
+  }
+}

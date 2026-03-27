@@ -73,6 +73,20 @@ export const movieService = {
     return response.data;
   },
 
+  getPersonDetails: async (id: string | number) => {
+    const response = await api.get(`/person/${id}`, {
+      params: { language: 'pt-BR' }
+    });
+    return response.data;
+  },
+
+  getPersonMovieCredits: async (id: string | number) => {
+    const response = await api.get(`/person/${id}/movie_credits`, {
+      params: { language: 'pt-BR' }
+    });
+    return response.data;
+  },
+
 
 };
 

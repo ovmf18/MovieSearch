@@ -1,0 +1,254 @@
+.person-details-page {
+  position: relative;
+  min-height: 100vh;
+  color: #fff;
+  padding-bottom: 5rem;
+  overflow-x: hidden;
+  background-color: var(--bg-color);
+
+  .person-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40vh;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 223, 130, 0.1) 0%,
+      rgba(15, 16, 20, 1) 100%
+    );
+    z-index: 1;
+  }
+
+  .person-container {
+    position: relative;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 2rem;
+    padding-top: 4rem;
+    z-index: 10;
+
+    @media (max-width: 768px) {
+      padding: 1rem 1.5rem;
+      padding-top: 2rem;
+    }
+
+    .back-button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-bottom: 3rem;
+      backdrop-filter: blur(10px);
+
+      @media (max-width: 768px) {
+        margin-bottom: 2rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      &:hover {
+        background: var(--primary-color);
+        color: var(--bg-color);
+        border-color: var(--primary-color);
+      }
+    }
+
+    .main-info {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 4rem;
+
+      @media (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .profile-side {
+        @media (max-width: 768px) {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .profile-poster {
+          width: 100%;
+          border-radius: 12px;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          margin-bottom: 2rem;
+
+          @media (max-width: 768px) {
+            max-width: 250px;
+          }
+
+          &.missing {
+            aspect-ratio: 2/3;
+            background: #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            color: #333;
+            font-weight: 600;
+            font-size: 1.2rem;
+
+            svg {
+              opacity: 0.3;
+            }
+          }
+        }
+
+        .personal-info {
+          width: 100%;
+          
+          h3 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+
+            @media (max-width: 768px) {
+              text-align: center;
+            }
+          }
+
+          .info-block {
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+
+            @media (max-width: 768px) {
+              align-items: center;
+            }
+
+            .label {
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              color: var(--text-muted);
+              font-size: 0.9rem;
+              font-weight: 600;
+              margin-bottom: 4px;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+            }
+
+            .value {
+              font-size: 1.05rem;
+              color: rgba(255, 255, 255, 0.9);
+            }
+          }
+        }
+      }
+
+      .content-side {
+        .person-name {
+          font-size: 3.5rem;
+          font-weight: 800;
+          margin-bottom: 2rem;
+          letter-spacing: -1px;
+
+          @media (max-width: 768px) {
+            font-size: 2.5rem;
+            text-align: center;
+          }
+        }
+
+        .biography-section {
+          margin-bottom: 3rem;
+
+          .section-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+
+             @media (max-width: 768px) {
+              text-align: center;
+            }
+          }
+
+          .bio-content {
+            p {
+              font-size: 1.15rem;
+              line-height: 1.8;
+              color: rgba(255, 255, 255, 0.85);
+              margin-bottom: 1rem;
+
+              &.no-bio {
+                font-style: italic;
+                opacity: 0.6;
+              }
+            }
+          }
+        }
+
+        .known-for-section {
+          .section-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            
+            @media (max-width: 768px) {
+              text-align: center;
+            }
+          }
+
+          .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1.5rem;
+
+            @media (max-width: 768px) {
+              grid-template-columns: repeat(2, 1fr);
+            }
+            
+            @media (max-width: 480px) {
+              grid-template-columns: repeat(2, 1fr);
+              gap: 1rem;
+            }
+
+            .movie-credit-card {
+              display: flex;
+              flex-direction: column;
+              height: 100%;
+              min-width: 0;
+              
+              .character-name {
+                margin-top: 8px;
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                text-align: left;
+                padding: 0 5px;
+                flex-grow: 1;
+
+                span {
+                  display: block;
+                  color: rgba(255, 255, 255, 0.9);
+                  font-weight: 500;
+                  margin-top: 2px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

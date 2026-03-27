@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Clock, Calendar, Star, Play, ImageOff, X, Bookmark } from 'lucide-react';
 import { movieService } from '../services/api';
 import { useWatchlist } from '../context/WatchlistContext';
@@ -307,13 +307,27 @@ const MovieDetails = () => {
               {directors.length > 0 && (
                 <div className="crew-item">
                   <strong>Direção</strong>
-                  <p>{directors.map(d => d.name).join(', ')}</p>
+                  <p>
+                    {directors.map((d, index) => (
+                      <span key={`dir-${d.id}`}>
+                        <Link to={`/person/${d.id}`} className="crew-link">{d.name}</Link>
+                        {index < directors.length - 1 ? ', ' : ''}
+                      </span>
+                    ))}
+                  </p>
                 </div>
               )}
               {writers.length > 0 && (
                 <div className="crew-item">
                   <strong>Roteiro</strong>
-                  <p>{writers.map(w => w.name).join(', ')}</p>
+                  <p>
+                    {writers.map((w, index) => (
+                      <span key={`writ-${w.id}`}>
+                        <Link to={`/person/${w.id}`} className="crew-link">{w.name}</Link>
+                        {index < writers.length - 1 ? ', ' : ''}
+                      </span>
+                    ))}
+                  </p>
                 </div>
               )}
             </div>
@@ -322,7 +336,7 @@ const MovieDetails = () => {
               <h3>Elenco Principal</h3>
               <div className="cast-list">
                 {movie.credits.cast.slice(0, 6).map(person => (
-                  <div key={person.id} className="cast-card">
+                  <Link to={`/person/${person.id}`} key={person.id} className="cast-card">
                     <div className="cast-img-wrapper">
                       {person.profile_path ? (
                         <img src={`https://image.tmdb.org/t/p/w185${person.profile_path}`} alt={person.name} />
@@ -332,7 +346,7 @@ const MovieDetails = () => {
                     </div>
                     <p className="actor-name">{person.name}</p>
                     <p className="char-name">{person.character}</p>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>

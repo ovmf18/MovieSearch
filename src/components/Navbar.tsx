@@ -30,7 +30,7 @@ const Navbar = () => {
   const addSearchToHistory = (query: string) => {
     if (!query.trim()) return;
     const queryLower = query.trim().toLowerCase();
-    
+
     setSearchHistory(prev => {
       const filtered = prev.filter(item => item.toLowerCase() !== queryLower);
       const newHistory = [query.trim(), ...filtered].slice(0, 5);
@@ -149,7 +149,7 @@ const Navbar = () => {
                 <Search size={20} color="#666" className="input-icon" />
                 <input
                   type="text"
-                  placeholder="Buscar Filme, Série..."
+                  placeholder="Buscar Filme..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onFocus={() => setShowDropdown(true)}
@@ -169,36 +169,36 @@ const Navbar = () => {
                       key={movie.id}
                       to={`/movie/${movie.id}`}
                       className="dropdown-item"
-                      onClick={() => { 
+                      onClick={() => {
                         addSearchToHistory(searchQuery);
-                        setShowDropdown(false); 
-                        setIsSearchOpen(false); 
-                        setSearchQuery(''); 
+                        setShowDropdown(false);
+                        setIsSearchOpen(false);
+                        setSearchQuery('');
                       }}
                     >
-                    <div className="item-poster">
-                      {movie.poster_path ? (
-                        <img src={`https://image.tmdb.org/t/p/w92${movie.poster_path}`} alt={movie.title} />
-                      ) : (
-                        <div className="no-img-small">
-                          <ImageOff size={20} />
-                        </div>
-                      )}
-                    </div>
-                    <div className="item-info">
-                      <p className="item-title">{movie.title}</p>
-                      <div className="item-meta">
-                        <span className="item-year">
-                          {movie.release_date ? new Date(movie.release_date).getFullYear() : 'N/A'}
-                        </span>
-                        <div className="item-rating">
-                          <Star size={12} fill="#00df82" color="#00df82" />
-                          <span>{movie.vote_average.toFixed(1)}</span>
+                      <div className="item-poster">
+                        {movie.poster_path ? (
+                          <img src={`https://image.tmdb.org/t/p/w92${movie.poster_path}`} alt={movie.title} />
+                        ) : (
+                          <div className="no-img-small">
+                            <ImageOff size={20} />
+                          </div>
+                        )}
+                      </div>
+                      <div className="item-info">
+                        <p className="item-title">{movie.title}</p>
+                        <div className="item-meta">
+                          <span className="item-year">
+                            {movie.release_date ? new Date(movie.release_date).getFullYear() : 'N/A'}
+                          </span>
+                          <div className="item-rating">
+                            <Star size={12} fill="#00df82" color="#00df82" />
+                            <span>{movie.vote_average.toFixed(1)}</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  ))}
                   <div className="dropdown-footer" onClick={handleSearch}>
                     Ver todos os resultados para "{searchQuery}"
                   </div>
@@ -210,15 +210,15 @@ const Navbar = () => {
                     <div key={index} className="history-item" onClick={() => handleHistoryClick(historyItem)}>
                       <Clock size={16} color="#666" />
                       <span>{historyItem}</span>
-                      <button 
-                        className="remove-history-btn" 
-                        onClick={(e) => { 
-                          e.stopPropagation(); 
-                          removeHistoryItem(historyItem); 
+                      <button
+                        className="remove-history-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          removeHistoryItem(historyItem);
                         }}
                         aria-label="Remover do histórico"
                       >
-                         <X size={14} color="#666" />
+                        <X size={14} color="#666" />
                       </button>
                     </div>
                   ))}

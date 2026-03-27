@@ -500,6 +500,17 @@
             p {
               font-size: 1rem;
               color: var(--text-muted);
+
+              .crew-link {
+                color: rgba(255, 255, 255, 0.9);
+                text-decoration: none;
+                transition: var(--transition);
+
+                &:hover {
+                  color: var(--primary-color);
+                  text-decoration: underline;
+                }
+              }
             }
           }
         }
@@ -538,11 +549,21 @@
             }
 
             .cast-card {
+              display: block;
+              text-decoration: none;
+              color: inherit;
               background: rgba(255, 255, 255, 0.03);
               padding: 10px;
               border-radius: 12px;
               text-align: center;
               border: 1px solid rgba(255, 255, 255, 0.05);
+              transition: var(--transition);
+
+              &:hover {
+                background: rgba(255, 255, 255, 0.08);
+                transform: translateY(-5px);
+                border-color: rgba(0, 223, 130, 0.3);
+              }
 
               .cast-img-wrapper {
                 width: 100%;

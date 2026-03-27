@@ -1,17 +1,4 @@
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
 
-.shimmer {
-  background: linear-gradient(90deg, #1f2128 25%, #2a2d36 50%, #1f2128 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite linear;
-}
 
 .skeleton-card {
   display: flex;
