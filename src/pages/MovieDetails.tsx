@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Clock, Calendar, Star, Play, ImageOff, X, Bookmark } from 'lucide-react';
+import { ArrowLeft, Clock, Calendar, Star, Play, ImageOff, X, Bookmark, ArrowRight } from 'lucide-react';
 import { movieService } from '../services/api';
 import { useWatchlist } from '../context/WatchlistContext';
 import MovieCard from '../components/MovieCard';
@@ -51,7 +51,7 @@ interface MovieDetails {
   };
 }
 
-interface SimilarMovie {
+interface RecommendedMovie {
   id: number;
   title: string;
   poster_path: string;
@@ -64,7 +64,7 @@ const MovieDetails = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [movie, setMovie] = useState<MovieDetails | null>(null);
-  const [similarMovies, setSimilarMovies] = useState<SimilarMovie[]>([]);
+  const [recommendedMovies, setRecommendedMovies] = useState<RecommendedMovie[]>([]);
   const [loading, setLoading] = useState(true);
   const [showTrailer, setShowTrailer] = useState(false);
 
@@ -93,9 +93,9 @@ const MovieDetails = () => {
       setLoading(true);
       try {
         const data = await movieService.getMovieDetails(id);
-        const similarData = await movieService.getSimilarMovies(id);
+        const recommendationData = await movieService.getRecommendations(id);
         setMovie(data);
-        setSimilarMovies(similarData.results.slice(0, 5));
+        setRecommendedMovies(recommendationData.results.slice(0, 5));
       } catch (error) {
         console.error("Erro ao buscar detalhes:", error);
       } finally {
@@ -348,25 +348,30 @@ const MovieDetails = () => {
                     <p className="char-name">{person.character}</p>
                   </Link>
                 ))}
+                {movie.credits.cast.length > 6 && (
+                  <Link to={`/movie/${movie.id}/credits`} className="show-more-link">
+                    Mostrar mais <ArrowRight size={20} />
+                  </Link>
+                )}
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {similarMovies.length > 0 && (
+      {recommendedMovies.length > 0 && (
         <div className="similar-movies-section">
-          <h2>Mais Títulos Semelhantes a {movie.title}</h2>
+          <h2>Recomendações de Filmes <span>semelhantes a {movie.title}</span></h2>
           <div className="list-wrapper">
             <div className="horizontal-list">
-              {similarMovies.map(similar => (
+              {recommendedMovies.map(rec => (
                 <MovieCard
-                  key={`similar-${similar.id}`}
-                  id={similar.id}
-                  title={similar.title}
-                  posterPath={similar.poster_path}
-                  releaseDate={similar.release_date}
-                  voteAverage={similar.vote_average}
+                  key={`rec-${rec.id}`}
+                  id={rec.id}
+                  title={rec.title}
+                  posterPath={rec.poster_path}
+                  releaseDate={rec.release_date}
+                  voteAverage={rec.vote_average}
                 />
               ))}
             </div>

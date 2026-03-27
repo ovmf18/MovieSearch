@@ -542,6 +542,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 1.5rem;
+            align-items: center;
 
             @include mobile {
               grid-template-columns: repeat(2, 1fr);
@@ -600,6 +601,43 @@
               .char-name {
                 font-size: 0.75rem;
                 color: var(--text-muted);
+              }
+            }
+
+            .show-more-link {
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              background: none;
+              border: none;
+              color: var(--primary-color);
+              font-size: 1rem;
+              font-weight: 700;
+              cursor: pointer;
+              transition: var(--transition);
+              padding: 0;
+              height: fit-content;
+              align-self: center;
+              white-space: nowrap;
+
+              &:hover {
+                opacity: 0.8;
+                gap: 12px;
+              }
+
+              svg {
+                transition: transform 0.3s ease;
+              }
+
+              &:hover svg {
+                transform: translateX(5px);
+              }
+
+              @include mobile {
+                justify-content: center;
+                width: 100%;
+                margin-top: 1rem;
+                padding: 10px 0;
               }
             }
           }

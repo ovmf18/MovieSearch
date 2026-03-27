@@ -7,6 +7,7 @@ import Trending from './pages/Trending'
 import TopRated from './pages/TopRated'
 import Watchlist from './pages/Watchlist'
 import PersonDetails from './pages/PersonDetails'
+import MovieCredits from './pages/MovieCredits'
 import Navbar from './components/Navbar'
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/top-rated" element={<TopRated />} />
           <Route path="/watchlist" element={<Watchlist />} />
           <Route path="/person/:id" element={<PersonDetails />} />
+          <Route path="/movie/:id/credits" element={<MovieCredits />} />
         </Routes>
       </div>
     </Router>

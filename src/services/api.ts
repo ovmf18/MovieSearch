@@ -73,6 +73,16 @@ export const movieService = {
     return response.data;
   },
 
+  getRecommendations: async (id: string | number) => {
+    const response = await api.get(`/movie/${id}/recommendations`, {
+      params: { 
+        language: 'pt-BR',
+        page: 1
+      }
+    });
+    return response.data;
+  },
+
   getPersonDetails: async (id: string | number) => {
     const response = await api.get(`/person/${id}`, {
       params: { language: 'pt-BR' }
