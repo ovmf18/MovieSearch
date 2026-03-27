@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, NavLink } from 'react-router-dom';
-import { Clapperboard, Search, Star, ImageOff, X, Menu, Bookmark } from 'lucide-react';
+import { Clapperboard, Search, Star, ImageOff, X, Menu, Bookmark, Clock } from 'lucide-react';
 import { movieService } from '../services/api';
 import { useWatchlist } from '../context/WatchlistContext';
 import './Navbar.scss';
@@ -22,6 +22,43 @@ const Navbar = () => {
   const navigate = useNavigate();
   const searchRef = useRef<HTMLDivElement>(null);
   const { watchlist } = useWatchlist();
+  const [searchHistory, setSearchHistory] = useState<string[]>(() => {
+    const saved = localStorage.getItem('searchHistory');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const addSearchToHistory = (query: string) => {
+    if (!query.trim()) return;
+    const queryLower = query.trim().toLowerCase();
+    
+    setSearchHistory(prev => {
+      const filtered = prev.filter(item => item.toLowerCase() !== queryLower);
+      const newHistory = [query.trim(), ...filtered].slice(0, 5);
+      localStorage.setItem('searchHistory', JSON.stringify(newHistory));
+      return newHistory;
+    });
+  };
+
+  const removeHistoryItem = (query: string) => {
+    setSearchHistory(prev => {
+      const newHistory = prev.filter(item => item !== query);
+      localStorage.setItem('searchHistory', JSON.stringify(newHistory));
+      return newHistory;
+    });
+  };
+
+  const clearHistory = () => {
+    setSearchHistory([]);
+    localStorage.removeItem('searchHistory');
+  };
+
+  const handleHistoryClick = (query: string) => {
+    setSearchQuery(query);
+    setShowDropdown(false);
+    setIsSearchOpen(false);
+    setIsMenuOpen(false);
+    navigate(`/search?q=${encodeURIComponent(query)}`);
+  };
 
   useEffect(() => {
     const timer = setTimeout(async () => {
@@ -49,9 +86,10 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSearch = (e?: React.FormEvent | React.MouseEvent) => {
+    if (e) e.preventDefault();
     if (searchQuery.trim()) {
+      addSearchToHistory(searchQuery);
       setShowDropdown(false);
       setIsSearchOpen(false);
       setIsMenuOpen(false);
@@ -114,7 +152,7 @@ const Navbar = () => {
                   placeholder="Buscar Filme, Série..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  onFocus={() => searchQuery.length > 2 && setShowDropdown(true)}
+                  onFocus={() => setShowDropdown(true)}
                   autoFocus
                 />
                 <button type="button" className="close-btn" onClick={() => { setIsSearchOpen(false); setShowDropdown(false); setSearchQuery(''); }}>
@@ -123,15 +161,21 @@ const Navbar = () => {
               </form>
             )}
 
-            {showDropdown && results.length > 0 && isSearchOpen && (
-              <div className="nav-search-dropdown">
-                {results.map(movie => (
-                  <Link
-                    key={movie.id}
-                    to={`/movie/${movie.id}`}
-                    className="dropdown-item"
-                    onClick={() => { setShowDropdown(false); setIsSearchOpen(false); setSearchQuery(''); }}
-                  >
+            {showDropdown && isSearchOpen && (
+              searchQuery.length > 2 && results.length > 0 ? (
+                <div className="nav-search-dropdown">
+                  {results.map(movie => (
+                    <Link
+                      key={movie.id}
+                      to={`/movie/${movie.id}`}
+                      className="dropdown-item"
+                      onClick={() => { 
+                        addSearchToHistory(searchQuery);
+                        setShowDropdown(false); 
+                        setIsSearchOpen(false); 
+                        setSearchQuery(''); 
+                      }}
+                    >
                     <div className="item-poster">
                       {movie.poster_path ? (
                         <img src={`https://image.tmdb.org/t/p/w92${movie.poster_path}`} alt={movie.title} />
@@ -155,10 +199,34 @@ const Navbar = () => {
                     </div>
                   </Link>
                 ))}
-                <div className="dropdown-footer" onClick={handleSearch}>
-                  Ver todos os resultados para "{searchQuery}"
+                  <div className="dropdown-footer" onClick={handleSearch}>
+                    Ver todos os resultados para "{searchQuery}"
+                  </div>
                 </div>
-              </div>
+              ) : searchQuery.length <= 2 && searchHistory.length > 0 ? (
+                <div className="nav-search-dropdown history-dropdown">
+                  <div className="dropdown-header">Buscas Recentes</div>
+                  {searchHistory.map((historyItem, index) => (
+                    <div key={index} className="history-item" onClick={() => handleHistoryClick(historyItem)}>
+                      <Clock size={16} color="#666" />
+                      <span>{historyItem}</span>
+                      <button 
+                        className="remove-history-btn" 
+                        onClick={(e) => { 
+                          e.stopPropagation(); 
+                          removeHistoryItem(historyItem); 
+                        }}
+                        aria-label="Remover do histórico"
+                      >
+                         <X size={14} color="#666" />
+                      </button>
+                    </div>
+                  ))}
+                  <div className="dropdown-footer clear-history" onClick={clearHistory}>
+                    Limpar histórico de buscas
+                  </div>
+                </div>
+              ) : null
             )}
           </div>
         </div>

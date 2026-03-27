@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Star, ImageOff } from 'lucide-react';
+import { Star, ImageOff, Clock, X } from 'lucide-react';
 import { movieService } from '../services/api';
 import './Hero.scss';
 
@@ -25,6 +25,42 @@ const Hero = ({ backdropPath, featuredMovieId, mode = 'search' }: HeroProps) => 
   const [featuredMovie, setFeaturedMovie] = useState<any>(null);
   const searchRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+
+  const [searchHistory, setSearchHistory] = useState<string[]>(() => {
+    const saved = localStorage.getItem('searchHistory');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const addSearchToHistory = (query: string) => {
+    if (!query.trim()) return;
+    const queryLower = query.trim().toLowerCase();
+    
+    setSearchHistory(prev => {
+      const filtered = prev.filter(item => item.toLowerCase() !== queryLower);
+      const newHistory = [query.trim(), ...filtered].slice(0, 5);
+      localStorage.setItem('searchHistory', JSON.stringify(newHistory));
+      return newHistory;
+    });
+  };
+
+  const removeHistoryItem = (query: string) => {
+    setSearchHistory(prev => {
+      const newHistory = prev.filter(item => item !== query);
+      localStorage.setItem('searchHistory', JSON.stringify(newHistory));
+      return newHistory;
+    });
+  };
+
+  const clearHistory = () => {
+    setSearchHistory([]);
+    localStorage.removeItem('searchHistory');
+  };
+
+  const handleHistoryClick = (query: string) => {
+    setSearchQuery(query);
+    setShowDropdown(false);
+    navigate(`/search?q=${encodeURIComponent(query)}`);
+  };
 
   useEffect(() => {
     if (mode === 'featured' && featuredMovieId) {
@@ -52,7 +88,6 @@ const Hero = ({ backdropPath, featuredMovieId, mode = 'search' }: HeroProps) => 
         setShowDropdown(true);
       } else {
         setResults([]);
-        setShowDropdown(false);
       }
     }, 300);
 
@@ -69,9 +104,11 @@ const Hero = ({ backdropPath, featuredMovieId, mode = 'search' }: HeroProps) => 
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSearch = (e?: React.FormEvent | React.MouseEvent) => {
+    if (e) e.preventDefault();
     if (searchQuery.trim()) {
+      addSearchToHistory(searchQuery);
+      setShowDropdown(false);
       navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
       setSearchQuery('');
     }
@@ -117,23 +154,25 @@ const Hero = ({ backdropPath, featuredMovieId, mode = 'search' }: HeroProps) => 
                   placeholder="Buscar por um Filme..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  onFocus={() => searchQuery.length > 2 && setShowDropdown(true)}
+                  onFocus={() => setShowDropdown(true)}
                 />
                 <button type="submit">Pesquisar</button>
               </form>
 
-              {showDropdown && results.length > 0 && (
-                <div className="search-dropdown" ref={searchRef}>
-                  {results.map((movie) => (
-                    <Link
-                      key={movie.id}
-                      to={`/movie/${movie.id}`}
-                      className="dropdown-item"
-                      onClick={() => {
-                        setShowDropdown(false);
-                        setSearchQuery('');
-                      }}
-                    >
+              {showDropdown && (
+                searchQuery.length > 2 && results.length > 0 ? (
+                  <div className="search-dropdown" ref={searchRef}>
+                    {results.map((movie) => (
+                      <Link
+                        key={movie.id}
+                        to={`/movie/${movie.id}`}
+                        className="dropdown-item"
+                        onClick={() => {
+                          addSearchToHistory(searchQuery);
+                          setShowDropdown(false);
+                          setSearchQuery('');
+                        }}
+                      >
                       <div className="item-poster">
                         {movie.poster_path ? (
                           <img
@@ -162,10 +201,35 @@ const Hero = ({ backdropPath, featuredMovieId, mode = 'search' }: HeroProps) => 
                       </div>
                     </Link>
                   ))}
-                  <div className="dropdown-footer" onClick={handleSearch}>
-                    Ver todos os resultados para "{searchQuery}"
+                    <div className="dropdown-footer" onClick={handleSearch}>
+                      Ver todos os resultados para "{searchQuery}"
+                    </div>
                   </div>
-                </div>
+                ) : searchQuery.length <= 2 && searchHistory.length > 0 ? (
+                  <div className="search-dropdown history-dropdown" ref={searchRef}>
+                    <div className="dropdown-header">Buscas Recentes</div>
+                    {searchHistory.map((historyItem, index) => (
+                      <div key={index} className="history-item" onClick={() => handleHistoryClick(historyItem)}>
+                        <Clock size={16} color="#666" />
+                        <span>{historyItem}</span>
+                        <button 
+                          type="button"
+                          className="remove-history-btn" 
+                          onClick={(e) => { 
+                            e.stopPropagation(); 
+                            removeHistoryItem(historyItem); 
+                          }}
+                          aria-label="Remover do histórico"
+                        >
+                           <X size={14} color="#666" />
+                        </button>
+                      </div>
+                    ))}
+                    <div className="dropdown-footer clear-history" onClick={clearHistory}>
+                      Limpar histórico de buscas
+                    </div>
+                  </div>
+                ) : null
               )}
             </div>
           )}
