@@ -372,8 +372,43 @@
             color: var(--primary-color);
           }
 
+          .watchlist-main-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid transparent;
+            color: #fff;
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+
+            @include tablet {
+              width: 100%;
+              justify-content: center;
+            }
+
+            &:hover {
+              background: rgba(0, 223, 130, 0.2);
+              border-color: var(--primary-color);
+              color: var(--primary-color);
+            }
+
+            &.active {
+              background: var(--primary-color);
+              color: var(--bg-color);
+
+              &:hover {
+                background: #ff4757;
+                border-color: #ff4757;
+                color: #fff;                
+              }
+            }
+          }
+
           .trailer-btn {
-            margin-left: auto;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -387,7 +422,6 @@
             transition: var(--transition);
 
             @include tablet {
-              margin-left: 0;
               width: 100%;
               justify-content: center;
             }

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Clock, Calendar, Star, Play, ImageOff, X } from 'lucide-react';
+import { ArrowLeft, Clock, Calendar, Star, Play, ImageOff, X, Bookmark } from 'lucide-react';
 import { movieService } from '../services/api';
+import { useWatchlist } from '../context/WatchlistContext';
 import './MovieDetails.scss';
 
 interface MovieDetails {
@@ -54,6 +55,25 @@ const MovieDetails = () => {
   const [movie, setMovie] = useState<MovieDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [showTrailer, setShowTrailer] = useState(false);
+
+  const { addToWatchlist, removeFromWatchlist, isInWatchlist } = useWatchlist();
+  const movieId = id ? parseInt(id, 10) : 0;
+  const isBookmarked = isInWatchlist(movieId);
+
+  const toggleWatchlist = () => {
+    if (!movie) return;
+    if (isBookmarked) {
+      removeFromWatchlist(movieId);
+    } else {
+      addToWatchlist({
+        id: movie.id,
+        title: movie.title,
+        poster_path: movie.poster_path,
+        release_date: movie.release_date,
+        vote_average: movie.vote_average
+      });
+    }
+  };
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -247,6 +267,14 @@ const MovieDetails = () => {
                 {movie.vote_average > 0 ? movie.vote_average.toFixed(1) : 'N/A'}
               </div>
               <span className="vote-label">Avaliação dos Usuários</span>
+
+              <button 
+                className={`watchlist-main-btn ${isBookmarked ? 'active' : ''}`}
+                onClick={toggleWatchlist}
+              >
+                <Bookmark size={20} fill={isBookmarked ? "currentColor" : "none"} />
+                {isBookmarked ? "Remover da Lista" : "Adicionar à Lista"}
+              </button>
 
               {trailer && (
                 <button className="trailer-btn" onClick={() => setShowTrailer(true)}>

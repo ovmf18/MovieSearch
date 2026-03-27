@@ -57,6 +57,44 @@
       }
     }
 
+    .watchlist-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(15, 16, 20, 0.6);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 3;
+      transition: var(--transition);
+
+      &:hover {
+        background: rgba(0, 223, 130, 0.2);
+        color: var(--primary-color);
+        border-color: var(--primary-color);
+      }
+
+      &.active {
+        background: var(--primary-color);
+        color: var(--bg-color);
+        border-color: var(--primary-color);
+        
+        &:hover {
+          background: #ff4757;
+          border-color: #ff4757;
+          color: #fff;
+          transform: scale(1.1);
+        }
+      }
+    }
+
     .rating-badge {
       position: absolute;
       bottom: 10px;

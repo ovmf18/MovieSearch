@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { ImageOff } from 'lucide-react';
+import { ImageOff, Bookmark } from 'lucide-react';
+import { useWatchlist } from '../context/WatchlistContext';
 import './MovieCard.scss';
 
 interface MovieCardProps {
@@ -11,6 +12,18 @@ interface MovieCardProps {
 }
 
 const MovieCard = ({ id, title, posterPath, releaseDate, voteAverage }: MovieCardProps) => {
+  const { addToWatchlist, removeFromWatchlist, isInWatchlist } = useWatchlist();
+  const isBookmarked = isInWatchlist(id);
+
+  const toggleWatchlist = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent navigating to details
+    if (isBookmarked) {
+      removeFromWatchlist(id);
+    } else {
+      addToWatchlist({ id, title, poster_path: posterPath, release_date: releaseDate, vote_average: voteAverage });
+    }
+  };
+
   const imageUrl = posterPath ? `https://image.tmdb.org/t/p/w500${posterPath}` : null;
 
   const formatBRDate = (dateStr: string) => {
@@ -40,6 +53,13 @@ const MovieCard = ({ id, title, posterPath, releaseDate, voteAverage }: MovieCar
             <span>Imagem indisponível</span>
           </div>
         )}
+        <button 
+          className={`watchlist-btn ${isBookmarked ? 'active' : ''}`} 
+          onClick={toggleWatchlist}
+          title={isBookmarked ? "Remover da lista" : "Adicionar à lista"}
+        >
+          <Bookmark size={20} fill={isBookmarked ? "currentColor" : "none"} />
+        </button>
         <div className={`rating-badge ${getColorClass(voteAverage)}`}>
           {voteAverage > 0 ? voteAverage.toFixed(1) : 'N/A'}
         </div>

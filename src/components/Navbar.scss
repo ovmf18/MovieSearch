@@ -100,6 +100,7 @@
 
     .nav-links {
       display: flex;
+      align-items: center;
       list-style: none;
       gap: 2rem;
       margin-right: auto;
@@ -165,6 +166,22 @@
 
             @include mobile {
               display: none;
+            }
+          }
+
+          &.watchlist-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+
+            .watchlist-badge {
+              background-color: var(--primary-color);
+              color: var(--bg-color);
+              font-size: 0.75rem;
+              font-weight: 800;
+              padding: 2px 6px;
+              border-radius: 10px;
+              margin-left: 2px;
             }
           }
         }

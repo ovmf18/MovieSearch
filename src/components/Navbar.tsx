@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, NavLink } from 'react-router-dom';
-import { Clapperboard, Search, Star, ImageOff, X, Menu } from 'lucide-react';
+import { Clapperboard, Search, Star, ImageOff, X, Menu, Bookmark } from 'lucide-react';
 import { movieService } from '../services/api';
+import { useWatchlist } from '../context/WatchlistContext';
 import './Navbar.scss';
 
 interface MovieResult {
@@ -20,6 +21,7 @@ const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
   const searchRef = useRef<HTMLDivElement>(null);
+  const { watchlist } = useWatchlist();
 
   useEffect(() => {
     const timer = setTimeout(async () => {
@@ -86,6 +88,13 @@ const Navbar = () => {
           <li><NavLink to="/trending" onClick={closeMenus}>Em Alta</NavLink></li>
           <li><NavLink to="/upcoming" onClick={closeMenus}>Lançamentos</NavLink></li>
           <li><NavLink to="/top-rated" onClick={closeMenus}>Melhores da História</NavLink></li>
+          <li className="watchlist-nav-item">
+            <NavLink to="/watchlist" onClick={closeMenus} className="watchlist-link">
+              <Bookmark size={20} />
+              <span>Minha Lista</span>
+              {watchlist.length > 0 && <span className="watchlist-badge">{watchlist.length}</span>}
+            </NavLink>
+          </li>
         </ul>
 
         <div className="nav-actions" ref={searchRef}>

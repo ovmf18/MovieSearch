@@ -5,6 +5,7 @@ import Search from './pages/Search'
 import Upcoming from './pages/Upcoming'
 import Trending from './pages/Trending'
 import TopRated from './pages/TopRated'
+import Watchlist from './pages/Watchlist'
 import Navbar from './components/Navbar'
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/upcoming" element={<Upcoming />} />
           <Route path="/trending" element={<Trending />} />
           <Route path="/top-rated" element={<TopRated />} />
+          <Route path="/watchlist" element={<Watchlist />} />
         </Routes>
       </div>
     </Router>
