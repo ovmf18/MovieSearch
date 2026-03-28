@@ -19,6 +19,7 @@ const Home = () => {
   const [trendingMovies, setTrendingMovies] = useState<Movie[]>([])
   const [upcomingMovies, setUpcomingMovies] = useState<Movie[]>([])
   const [topRatedMovies, setTopRatedMovies] = useState<Movie[]>([])
+  const [randomBackdrop, setRandomBackdrop] = useState<string>('')
   const [loading, setLoading] = useState(true)
 
   // Refs para controlar o scroll de cada lista
@@ -38,6 +39,11 @@ const Home = () => {
         setTrendingMovies(trendingRes.results)
         setUpcomingMovies(upcomingRes.results)
         setTopRatedMovies(topRatedRes.results)
+
+        if (trendingRes.results.length > 0) {
+          const randomIndex = Math.floor(Math.random() * trendingRes.results.length);
+          setRandomBackdrop(trendingRes.results[randomIndex].backdrop_path);
+        }
       } catch (error) {
         console.error("Erro ao buscar filmes:", error)
       } finally {
@@ -111,7 +117,7 @@ const Home = () => {
       {loading ? (
         <div className="hero-skeleton shimmer"></div>
       ) : (
-        <Hero backdropPath={trendingMovies[0]?.backdrop_path} />
+        <Hero backdropPath={randomBackdrop} />
       )}
       <main className="home-main">
         {renderSection("🎬 Em Alta", "Os filmes de maior sucesso no Brasil do momento", trendingMovies, trendingRef as React.RefObject<HTMLDivElement>)}

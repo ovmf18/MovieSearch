@@ -9,6 +9,7 @@ import Watchlist from './pages/Watchlist'
 import PersonDetails from './pages/PersonDetails'
 import MovieCredits from './pages/MovieCredits'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/person/:id" element={<PersonDetails />} />
           <Route path="/movie/:id/credits" element={<MovieCredits />} />
         </Routes>
+        <Footer />
       </div>
     </Router>
   )
