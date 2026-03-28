@@ -1,73 +1,94 @@
-# React + TypeScript + Vite
+# 🎬 MovieSearch - Premium Movie Discovery
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![SASS](https://img.shields.io/badge/SASS-hotpink?style=for-the-badge&logo=sass&logoColor=white)](https://sass-lang.com/)
+[![TMDB](https://img.shields.io/badge/TMDB-01d277?style=for-the-badge&logo=the-movie-database&logoColor=white)](https://www.themoviedb.org/)
 
-Currently, two official plugins are available:
+**MovieSearch** é uma plataforma de descoberta de filmes moderna e imersiva, focada na experiência do usuário. Usando a robusta API do TMDB, o projeto oferece informações completas, trailers, locais de exibição e muito mais.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## ✨ Principais Funcionalidades
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+-   **🔍 Busca Inteligente:** Pesquisa instantânea com sugestões em tempo real.
+-   **📽️ Detalhes Completos:** Sinopse, gêneros, orçamento, bilheteria e trailers integrados via YouTube.
+-   **🍿 Onde Assistir:** Integração com o JustWatch (via TMDB) para mostrar onde os filmes estão disponíveis para streaming, aluguel ou compra.
+-   **👥 Elenco e Equipe:** Página dedicada com a lista completa do elenco e equipe técnica, agrupada por departamentos (Direção, Roteiro, Arte, etc.).
+-   **👤 Perfil de Atores:** Biografia completa e filmografia detalhada de cada profissional.
+-   **⭐ Sistema de Favoritos:** Salve filmes na sua **Minha Lista** para assistir mais tarde, com persistência no navegador.
+-   **💡 Recomendações:** Sugestões de títulos baseadas no filme que você está visualizando.
+-   **📱 Totalmente Responsivo:** Design otimizado para celulares, tablets e desktops.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Tecnologias Utilizadas
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+-   **Frontend:** [React.js](https://reactjs.org/) (Hooks & Context API)
+-   **Linguagem:** [TypeScript](https://www.typescriptlang.org/)
+-   **Bundler:** [Vite](https://vitejs.dev/)
+-   **Estilização:** [SCSS/SASS](https://sass-lang.com/) (com Mixins e Variáveis)
+-   **Ícones:** [Lucide-React](https://lucide.dev/)
+-   **Requisições:** [Axios](https://axios-http.com/)
+-   **Roteamento:** [React Router Dom](https://reactrouter.com/)
+-   **API:** [themoviedb.org](https://www.themoviedb.org/)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🚀 Como Executar o Projeto
+
+Siga os passos abaixo para rodar o projeto localmente:
+
+### 1. Pré-requisitos
+-   [Node.js](https://nodejs.org/) instalado (recomenda-se v18 ou superior).
+-   Uma chave de API do [TMDB](https://www.themoviedb.org/documentation/api).
+
+### 2. Clonar o Repositório
+```bash
+git clone https://github.com/ovmf18/MovieSearch.git
+cd MovieSearch
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 3. Instalar Dependências
+```bash
+npm install
 ```
+
+### 4. Configurar Variáveis de Ambiente
+Crie um arquivo `.env` na raiz do projeto e adicione sua chave do TMDB:
+```env
+VITE_TMDB_API_KEY=sua_chave_aqui
+```
+*(Nota: Use o `.env.example` como referência).*
+
+### 5. Iniciar o Servidor de Desenvolvimento
+```bash
+npm run dev
+```
+O projeto estará disponível no seu navegador em `http://localhost:5173`.
+
+---
+
+## 📦 Estrutura de Pastas
+
+```text
+src/
+├── components/   # Componentes reutilizáveis (Hero, Navbar, Footer, MovieCard, Skeletons)
+├── context/      # Gerenciamento de estado global (Watchlist Context)
+├── pages/        # Telas da aplicação (Home, MovieDetails, MovieCredits, PersonDetails, etc.)
+├── services/     # Integração com a API (Axios config e MovieService)
+├── styles/       # Variáveis globais e mixins de estilo
+└── App.tsx       # Roteamento e estrutura principal
+```
+
+---
+
+## 📜 Licença e Créditos
+
+Este projeto foi desenvolvido por **Osmar Valporto Moreno Filho**.
+
+Agradecimentos ao [The Movie Database (TMDB)](https://www.themoviedb.org/) pelo fornecimento da API gratuita de filmes. Este projeto usa a API do TMDB mas não é endossado ou certificado pelo TMDB.
+
+---
+*Desenvolvido como um projeto de busca e descoberta cinematográfica com foco em UI/UX.*
