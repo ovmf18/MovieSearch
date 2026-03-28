@@ -49,6 +49,7 @@ const Trending = () => {
 
   useEffect(() => {
     fetchTrending(1);
+    document.title = "Em Alta | MovieSearch";
     window.scrollTo(0, 0);
   }, []);
 

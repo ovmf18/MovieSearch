@@ -22,6 +22,7 @@ const Search = () => {
     const fetchResults = async () => {
       if (!query) return;
       setLoading(true);
+      document.title = `Pesquisa: ${query} | MovieSearch`;
       try {
         const results = await movieService.searchMovies(query);
         setMovies(results);

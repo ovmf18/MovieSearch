@@ -52,6 +52,8 @@ const Home = () => {
     }
 
     fetchAllMovies()
+    document.title = "Explore o Cinema | MovieSearch"
+    window.scrollTo(0, 0)
   }, [])
 
   const handleScroll = (ref: React.RefObject<HTMLDivElement>, direction: 'left' | 'right') => {

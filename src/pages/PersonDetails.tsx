@@ -46,6 +46,7 @@ const PersonDetails = () => {
         ]);
 
         setPerson(personData);
+        document.title = `${personData.name} | MovieSearch`;
         const allCredits = [...(creditsData.cast || []), ...(creditsData.crew || [])];
         
         // Remove duplicates and aggregate jobs if any

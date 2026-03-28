@@ -59,6 +59,7 @@ const MovieCredits = () => {
         const data = await movieService.getMovieDetails(id);
         console.log("Dados recebidos em MovieCredits:", data);
         setMovie(data);
+        document.title = `Créditos: ${data.title} | MovieSearch`;
       } catch (error) {
         console.error("Erro ao buscar créditos:", error);
       } finally {

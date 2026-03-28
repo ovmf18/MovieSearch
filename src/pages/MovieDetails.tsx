@@ -95,6 +95,7 @@ const MovieDetails = () => {
         const data = await movieService.getMovieDetails(id);
         const recommendationData = await movieService.getRecommendations(id);
         setMovie(data);
+        document.title = `${data.title} | MovieSearch`;
         setRecommendedMovies(recommendationData.results.slice(0, 5));
       } catch (error) {
         console.error("Erro ao buscar detalhes:", error);

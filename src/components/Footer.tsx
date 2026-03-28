@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Film, Instagram, Github, Mail, Linkedin } from 'lucide-react';
+import { Film, Github, Mail, Linkedin } from 'lucide-react';
 import './Footer.scss';
 
 const Footer = () => {
@@ -18,10 +18,9 @@ const Footer = () => {
             Explore, descubra e organize suas histórias favoritas em um só lugar.
           </p>
           <div className="social-links">
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><Instagram size={20} /></a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer"><Github size={20} /></a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><Linkedin size={20} /></a>
-            <a href="mailto:contato@moviesearch.com"><Mail size={20} /></a>
+            <a href="https://github.com/ovmf18" target="_blank" rel="noopener noreferrer"><Github size={20} /></a>
+            <a href="https://www.linkedin.com/in/osmar-valporto-moreno-filho-408b72203/" target="_blank" rel="noopener noreferrer"><Linkedin size={20} /></a>
+            <a href="mailto:osmarfilho2013@gmail.com"><Mail size={20} /></a>
           </div>
         </div>
 

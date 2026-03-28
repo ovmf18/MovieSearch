@@ -64,6 +64,8 @@ const Upcoming = () => {
 
   useEffect(() => {
     fetchUpcoming(1);
+    document.title = "Próximos Lançamentos | MovieSearch";
+    window.scrollTo(0, 0);
   }, []);
 
   const handleLoadMore = () => {

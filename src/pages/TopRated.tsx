@@ -49,6 +49,7 @@ const TopRated = () => {
 
   useEffect(() => {
     fetchTopRated(1);
+    document.title = "Melhores da História | MovieSearch";
     window.scrollTo(0, 0);
   }, []);
 

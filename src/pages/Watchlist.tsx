@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useWatchlist } from '../context/WatchlistContext';
 import MovieCard from '../components/MovieCard';
@@ -5,6 +6,11 @@ import './Watchlist.scss';
 
 const Watchlist = () => {
   const { watchlist } = useWatchlist();
+
+  useEffect(() => {
+    document.title = "Minha Lista | MovieSearch";
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="watchlist-page">
