@@ -1,7 +1,8 @@
+@import '../styles/mixins.scss';
+
 .home-container {
   padding: 0 0 0; 
   width: 100%;
-
 
   .home-main {
     padding: 2rem 2rem;
@@ -72,9 +73,13 @@
         align-items: center;
         justify-content: center;
         z-index: 10;
+        
         opacity: 0;
+        visibility: hidden;
+        
         transition: var(--transition);
         border: 1px solid rgba(0, 223, 130, 0.3);
+        cursor: pointer;
 
         @include mobile {
           display: none;
@@ -88,10 +93,20 @@
           color: var(--bg-color);
           box-shadow: 0 0 20px rgba(0, 223, 130, 0.4);
         }
+
+        &.visible {
+          visibility: visible;
+        }
+
+        &:disabled {
+          pointer-events: none;
+          opacity: 0 !important;
+          visibility: hidden !important;
+        }
       }
 
       &:hover {
-        .scroll-button {
+        .scroll-button.visible {
           opacity: 1;
           &.left { left: 10px; }
           &.right { right: 10px; }
@@ -137,6 +152,33 @@
         & > div {
           scroll-snap-align: start;
         }
+
+        .show-more-link {
+          flex: 0 0 auto;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          text-decoration: none;
+          color: var(--primary-color);
+          font-weight: 500;
+          font-size: 1.1rem;
+          padding: 0 40px 3.5rem 20px;
+          white-space: nowrap;
+          transition: var(--transition);
+
+          &:hover {
+              opacity: 0.8;
+              gap: 12px;
+            }
+          
+            svg {
+              transition: transform 0.3s ease;
+            }
+          
+            &:hover svg {
+              transform: translateX(5px);
+            }
+        }
       }
     }
   }
@@ -149,5 +191,4 @@
     font-size: 1.2rem;
     color: var(--primary-color);
   }
-
 }
