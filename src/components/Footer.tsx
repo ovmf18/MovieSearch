@@ -18,7 +18,7 @@ const Footer = () => {
             Explore, descubra e organize suas histórias favoritas em um só lugar.
           </p>
           <div className="social-links">
-            <a href="https://github.com/ovmf18" target="_blank" rel="noopener noreferrer"><Github size={20} /></a>
+            <a href="https://github.com/ovmf18/MovieSearch" target="_blank" rel="noopener noreferrer"><Github size={20} /></a>
             <a href="https://www.linkedin.com/in/osmar-valporto-moreno-filho-408b72203/" target="_blank" rel="noopener noreferrer"><Linkedin size={20} /></a>
             <a href="mailto:osmarfilho2013@gmail.com"><Mail size={20} /></a>
           </div>
